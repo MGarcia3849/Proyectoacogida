@@ -7,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  mostrarFormulario = false;
+  modoLogin = true;
 
+  mostrarAuth(esLogin: boolean){
+    this.modoLogin = esLogin;
+    this.mostrarFormulario = true;
+  }
+
+  cerrarAuth(){
+    this.mostrarFormulario = false;
+  }
 }
