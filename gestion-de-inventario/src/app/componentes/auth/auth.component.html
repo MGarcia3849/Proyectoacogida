@@ -1,0 +1,17 @@
+<div class="auth-container">
+    <h2>{{ esLogin ? 'Iniciar sesión' : 'Crear cuenta' }}</h2>
+    <form (submit)="onSubmit()">
+      <input type="email" placeholder="Correo electrónico" required>
+      <input type="password" placeholder="Contraseña" required>
+      
+      <input *ngIf="!esLogin" type="text" placeholder="Nombre completo" required>
+  
+      <button type="submit">
+        {{ esLogin ? 'Iniciar sesión' : 'Registrarse' }}
+      </button>
+    </form>
+    
+    <p (click)="toogleForm()">
+      {{ esLogin ? '¿No tiene cuenta? Regístrese' : '¿Ya tiene cuenta? Inicie sesión' }}
+    </p>
+  </div>
