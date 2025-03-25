@@ -1,0 +1,14 @@
+<div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+  <h2 class="mb-4">¿A dónde quieres ir?</h2>
+
+  <div class="d-grid gap-3 col-6 mx-auto">
+    <button class="btn btn-primary" (click)="irA('/panel')" *ngIf="rol === 'admin'">
+      👥 Gestión de usuarios
+    </button>
+    <button class="btn btn-success" (click)="irA('/inventario')">
+      💻 Inventario de ordenadores
+    </button>
+    <button class="btn btn-outline-danger" (click)="logout()">Cerrar sesión</button>
+  </div>
+</div>
+
