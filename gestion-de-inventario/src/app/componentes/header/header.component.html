@@ -1,0 +1,10 @@
+<header class="header-container">
+    <h1>Gestión de Inventarios</h1>
+    <img src="../../../assets/GestiónInventarioLogo2.png">
+    <div class="auth-buttons">
+      <button class="btn-login" (click)="mostrarAuth(true)">Iniciar sesión</button>
+      <button class="btn-register" (click)="mostrarAuth(false)">Crear cuenta</button>
+    </div>
+  </header>
+
+  <app-auth *ngIf="mostrarFormulario" [modoLogin]="modoLogin" (cerrar)="cerrarAuth()"></app-auth>
