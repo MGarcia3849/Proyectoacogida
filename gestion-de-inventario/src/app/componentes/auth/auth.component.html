@@ -1,17 +1,18 @@
 <div class="auth-container">
-    <h2>{{ esLogin ? 'Iniciar sesión' : 'Crear cuenta' }}</h2>
+    <h2>{{ modoLogin ? 'Iniciar sesión' : 'Crear cuenta' }}</h2>
     <form (submit)="onSubmit()">
-      <input type="email" placeholder="Correo electrónico" required>
-      <input type="password" placeholder="Contraseña" required>
+      <input type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required>
+      <input type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
       
-      <input *ngIf="!esLogin" type="text" placeholder="Nombre completo" required>
+      <!-- Solo se muestra este campo si es un registro -->
+      <input *ngIf="!modoLogin" type="text" placeholder="Nombre completo" [(ngModel)]="nombreCompleto" name="nombreCompleto" required>
   
       <button type="submit">
-        {{ esLogin ? 'Iniciar sesión' : 'Registrarse' }}
+        {{ modoLogin ? 'Iniciar sesión' : 'Registrarse' }}
       </button>
     </form>
     
-    <p (click)="toogleForm()">
-      {{ esLogin ? '¿No tiene cuenta? Regístrese' : '¿Ya tiene cuenta? Inicie sesión' }}
+    <p (click)="toggleModo()">
+      {{ modoLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión' }}
     </p>
-  </div>
+</div>

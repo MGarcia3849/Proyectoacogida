@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -6,16 +7,31 @@ import { Component } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  mostrarFormulario = false;
+export class HeaderComponent implements OnInit {
   modoLogin = true;
+  usuarioLogueado: any = null; //Variable donde guardamos el usuario logeado
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.currentUser.subscribe(user => {
+      this.usuarioLogueado = user;
+    });
+  }
 
   mostrarAuth(esLogin: boolean){
     this.modoLogin = esLogin;
-    this.mostrarFormulario = true;
   }
 
-  cerrarAuth(){
-    this.mostrarFormulario = false;
+  cambiarModo(esLogin: boolean){
+    this.modoLogin = esLogin;
+  }
+
+  manejarLogin(usuario: any) {
+    this.usuarioLogueado = usuario;
+  }
+  
+  cerrarSesion() {
+    this.usuarioLogueado = null;
   }
 }
