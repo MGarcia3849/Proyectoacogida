@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Panel de Control</h2>
+    <button class="btn btn-outline-danger" (click)="logout()">Cerrar sesión</button>
+  </div>
+
+  <div class="card mb-4 p-4 shadow-sm">
+    <h5>Crear nuevo usuario</h5>
+    <form [formGroup]="usuarioForm" (ngSubmit)="crearUsuario()">
+      <div class="row g-2 mb-3">
+        <div class="col-md-4">
+          <input class="form-control" placeholder="Email" formControlName="email" type="email">
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" placeholder="Contraseña" formControlName="password" type="password">
+        </div>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="rol">
+            <option value="user">Usuario</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-success" [disabled]="usuarioForm.invalid || cargando">
+        {{ cargando ? 'Creando...' : 'Crear usuario' }}
+      </button>
+    </form>
+
+    <div *ngIf="mensaje" class="alert alert-success mt-2">{{ mensaje }}</div>
+    <div *ngIf="error" class="alert alert-danger mt-2">{{ error }}</div>
+  </div>
+
+  <div class="card p-3 shadow-sm">
+    <h5>Usuarios registrados</h5>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Rol</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of usuarios">
+          <td>{{ user.email }}</td>
+          <td>{{ user.rol }}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.uid)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

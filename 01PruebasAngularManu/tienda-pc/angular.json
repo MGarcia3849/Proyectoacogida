@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "01": {
+    "tienda-pc": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/01",
+            "outputPath": "dist/tienda-pc",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,7 +27,7 @@
               }
             ],
             "styles": [
-              "01PruebasAngularManu/01/node_modules/bootstrap/dist/css/bootstrap.css.map"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "01:build:production"
+              "buildTarget": "tienda-pc:build:production"
             },
             "development": {
-              "buildTarget": "01:build:development"
+              "buildTarget": "tienda-pc:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,6 +100,6 @@
     }
   },
   "cli": {
-    "analytics": "0d8a37bc-d049-43c5-8284-a22d4864c474"
+    "analytics": "05f0cc3d-fd3a-49a9-9322-101f5f700cc7"
   }
 }
