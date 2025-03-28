@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
+import { User } from 'firebase/auth';
+import { FirebaseService } from '../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +10,14 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   modoLogin = true;
-  usuarioLogueado: any = null; //Variable donde guardamos el usuario logeado
+    //Variable donde guardamos el usuario logeado
+  usuarioLogueado: User | null = null; 
 
-  constructor(private authService: AuthService) {}
+  constructor(private firebaseService: FirebaseService) {}
 
   ngOnInit() {
-    this.authService.currentUser.subscribe(user => {
+    // Escucha de cambios en la autentificación con Firebase
+    this.firebaseService.currentUser.subscribe(user => {
       this.usuarioLogueado = user;
     });
   }

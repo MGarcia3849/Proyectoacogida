@@ -11,13 +11,15 @@ import { FormsModule } from '@angular/forms';
 import { ListadoComponent } from './componentes/listado/listado.component';
 import { provideHttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { AgregarProductoComponent } from './componentes/agregar-producto/agregar-producto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     AuthComponent,
-    ListadoComponent
+    ListadoComponent,
+    AgregarProductoComponent
   ],
   imports: [
     BrowserModule,

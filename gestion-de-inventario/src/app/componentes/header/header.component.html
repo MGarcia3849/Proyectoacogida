@@ -4,7 +4,7 @@
 
 
   <div *ngIf="usuarioLogueado; else loginRegister">
-    <p>Bienvenido, {{ usuarioLogueado.nombre }}!</p>
+    <p>Bienvenido, {{ usuarioLogueado.email }}!</p>
     <button class="btn btn-danger" (click)="cerrarSesion()">Cerrar sesión</button>
   </div>
 

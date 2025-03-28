@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { environment } from '../../../../src/environments/environment';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged } from 'firebase/auth';
+import { BehaviorSubject } from 'rxjs';
 
 interface Usuario {
   email: string;
@@ -17,12 +18,14 @@ export class FirebaseService {
   private firebaseApp = initializeApp(environment.firebaseConfig);
   public db = getFirestore(this.firebaseApp);
   private auth = getAuth(this.firebaseApp);
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  public currentUser = this.currentUserSubject.asObservable();
 
   constructor() {}
 
   async getUsuarios() {
     const querySnapshot = await getDocs(collection(this.db, 'usuarios'));
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() as Usuario)}));
   }
 
   async register(email: string, password: string) {
@@ -30,7 +33,9 @@ export class FirebaseService {
   }
 
   async login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+    this.currentUserSubject.next(userCredential.user); //Emite el usuario logueado
+    return userCredential;
   }
 
   async addUsuario(usuario: Usuario) {
@@ -46,4 +51,28 @@ export class FirebaseService {
     const usuarioRef = doc(this.db, 'usuarios', id);
     return deleteDoc(usuarioRef);
   }
+
+  async cerrarSesion() {
+    return await signOut(this.auth);
+  }
+
+  async getProductos() {
+    const querySnapshot = await getDocs(collection(this.db, 'items'));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  }
+
+  async addProducto(producto: any) {
+    try {
+      const docRef = await addDoc(collection(this.db, 'items'), producto);
+      console.log('Producto agregado con ID:', docRef.id);
+    } catch (error) {
+      console.error('Error al agregar producto:', error);
+    }
+  }
+  
+  // Método para obtener el usuario registrado
+  getAuthState(callback: (user: User | null) => void) {
+    onAuthStateChanged(this.auth, callback);
+  }
+
 }

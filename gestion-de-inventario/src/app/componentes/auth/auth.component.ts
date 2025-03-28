@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +21,13 @@ export class AuthComponent {
   constructor(private firebaseService: FirebaseService) { }
 
   cerrarAuth() {
-    this.cerrar.emit();
+    console.log("Cerrando modal..."); //Depuración
+    const authModal = document.getElementById('authModal') as HTMLElement;
+    if (authModal) {
+      const modalBootstrap = Modal.getInstance(authModal);
+      modalBootstrap?.hide();
+    }
+    document.querySelector('.modal-backdrop')?.remove();
   }
 
   toggleModo(){
@@ -30,17 +37,15 @@ export class AuthComponent {
 
  async onSubmit() {
     if (this.modoLogin) {
-      // 🔹 Iniciar sesión con Firebase Authentication
       try {
         const userCredential = await this.firebaseService.login(this.email, this.password);
         console.log('Usuario logueado:', userCredential.user);
-        this.cerrarAuth();
+        this.cerrarAuth(); // Cierra el popup
       } catch (error) {
         console.error('Error al iniciar sesión:', (error as Error).message);
       }
       
     } else {
-      // 🔹 Registrar usuario
       if (!this.email || !this.password || !this.rol) {
         console.log('Por favor, rellene todos los campos');
         return;
@@ -50,7 +55,7 @@ export class AuthComponent {
         const userCredential = await this.firebaseService.register(this.email, this.password);
         const user = userCredential.user;
         
-        // 🔹 Guardar datos del usuario en Firestore (sin contraseña)
+        // Guarda datos menos la password por seguridad
         await this.firebaseService.addUsuario({
           email: user.email!,
           uid: user.uid,
