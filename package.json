@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rxfire": "^6.1.0"
+  }
+}
