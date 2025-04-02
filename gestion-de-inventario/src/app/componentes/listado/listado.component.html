@@ -1,0 +1,38 @@
+<div class="container mt-4">
+    <h2 class="text-center">Inventario</h2>
+
+    <button *ngIf="esAdministrador" class="btn btn-success mb-3" (click)="abrirAgregarProducto()">
+      Agregar Producto
+    </button>
+
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>
+            <button *ngIf="esAdministrador" class="btn btn-primary btn-sm" (click)="abrirEditarProducto(producto)">Editar</button>
+            <button *ngIf="esAdministrador" class="btn btn-danger btn-sm" (click)="eliminarProducto(producto.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Agregar componente modal editar-producto -->
+     <app-editar-producto [producto]="productoSeleccionado" (productoEditado)="recargarProductos()"></app-editar-producto>
+
+    <!-- Agregar componente modal agregar-producto -->
+    <app-agregar-producto (productoAgregado)="recargarProductos()"></app-agregar-producto>
+</div>
+  
