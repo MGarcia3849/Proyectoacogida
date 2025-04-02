@@ -7,21 +7,32 @@ import { AuthComponent } from './componentes/auth/auth.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { FormsModule } from '@angular/forms';
+import { ListadoComponent } from './componentes/listado/listado.component';
+import { provideHttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
+import { AgregarProductoComponent } from './componentes/agregar-producto/agregar-producto.component';
+import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AuthComponent
+    AuthComponent,
+    ListadoComponent,
+    AgregarProductoComponent,
+    EditarProductoComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
   ],
   providers: [
-    provideFirebaseApp(() => initializeApp({ projectId: "proyectoacogida-e96c5", appId: "1:642041507336:web:2b460d8bff65f3ce00abbd", storageBucket: "proyectoacogida-e96c5.firebasestorage.app", apiKey: "AIzaSyCVUo7v7pxLV0C6ekab6ZwzmCSIiVlzmbM", authDomain: "proyectoacogida-e96c5.firebaseapp.com", messagingSenderId: "642041507336", measurementId: "G-5GVZLXWNPG" })),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })
