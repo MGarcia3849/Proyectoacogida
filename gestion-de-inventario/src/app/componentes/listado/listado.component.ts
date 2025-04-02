@@ -12,6 +12,7 @@ export class ListadoComponent implements OnInit {
   // Almacén de productos
   productos: any[] = [];
   esAdministrador: boolean = false;
+  productoSeleccionado: any = {};
 
   constructor(private firebaseService: FirebaseService) { }
 
@@ -44,6 +45,15 @@ export class ListadoComponent implements OnInit {
       const modalBootstrap = new Modal(agregarProductoModal);
       modalBootstrap.show(); // Mostrar el modal para agregar producto
     }
+  }
+
+  abrirEditarProducto(producto: any): void {
+    this.productoSeleccionado = { ...producto }; // Se clona el producto y se modifica a parte del original
+  }
+
+  async eliminarProducto(id: string): Promise<void> {
+    await this.firebaseService.deleteProducto(id);
+    this.recargarProductos();
   }
 
   recargarProductos(): void {

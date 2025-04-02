@@ -22,12 +22,15 @@
           <td>{{ producto.descripcion }}</td>
           <td>{{ producto.cantidad }}</td>
           <td>
-            <button *ngIf="esAdministrador" class="btn btn-primary btn-sm">Editar</button>
-            <button *ngIf="esAdministrador" class="btn btn-danger btn-sm">Eliminar</button>
+            <button *ngIf="esAdministrador" class="btn btn-primary btn-sm" (click)="abrirEditarProducto(producto)">Editar</button>
+            <button *ngIf="esAdministrador" class="btn btn-danger btn-sm" (click)="eliminarProducto(producto.id)">Eliminar</button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Agregar componente modal editar-producto -->
+     <app-editar-producto [producto]="productoSeleccionado" (productoEditado)="recargarProductos()"></app-editar-producto>
 
     <!-- Agregar componente modal agregar-producto -->
     <app-agregar-producto (productoAgregado)="recargarProductos()"></app-agregar-producto>

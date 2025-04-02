@@ -53,7 +53,8 @@ export class FirebaseService {
   }
 
   async cerrarSesion() {
-    return await signOut(this.auth);
+    await signOut(this.auth);
+    window.location.reload(); // Recarga la página
   }
 
   async getProductos() {
@@ -68,6 +69,16 @@ export class FirebaseService {
     } catch (error) {
       console.error('Error al agregar producto:', error);
     }
+  }
+
+  async updateProducto(id: string, producto: Partial<any>) {
+    const productoRef = doc(this.db, 'items', id);
+    return updateDoc(productoRef, producto);
+  }
+
+  async deleteProducto(id: string) {
+    const productoRef = doc(this.db, 'items', id);
+    return deleteDoc(productoRef);
   }
   
   // Método para obtener el usuario registrado

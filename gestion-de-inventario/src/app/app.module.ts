@@ -12,6 +12,7 @@ import { ListadoComponent } from './componentes/listado/listado.component';
 import { provideHttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { AgregarProductoComponent } from './componentes/agregar-producto/agregar-producto.component';
+import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AgregarProductoComponent } from './componentes/agregar-producto/agregar
     HeaderComponent,
     AuthComponent,
     ListadoComponent,
-    AgregarProductoComponent
+    AgregarProductoComponent,
+    EditarProductoComponent
   ],
   imports: [
     BrowserModule,
