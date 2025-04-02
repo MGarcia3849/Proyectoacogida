@@ -1,0 +1,56 @@
+$primary-color: #007bff;
+$primary-hover: #0056b3;
+$danger-color: #dc3545;
+$danger-hover: #bd2130;
+$border-radius: 5px;
+$modal-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: $modal-shadow;
+}
+
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.form-container {
+  padding: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: $border-radius;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border-radius: $border-radius;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+
+  &.btn-primary {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+
+  &.btn-danger {
+    background-color: $danger-color;
+
+    &:hover {
+      background-color: $danger-hover;
+    }
+  }
+}

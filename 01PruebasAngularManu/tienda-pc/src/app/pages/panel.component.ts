@@ -14,9 +14,11 @@ import { Router } from '@angular/router';
 export class PanelComponent implements OnInit {
   usuarios: Usuario[] = [];
   usuarioForm!: FormGroup;
+  rolForm!: FormGroup;
   cargando = false;
   error = '';
   mensaje = '';
+  editandoUsuario: Usuario | null = null;
 
   constructor(
     private auth: AuthService,
@@ -28,6 +30,10 @@ export class PanelComponent implements OnInit {
     this.usuarioForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+      rol: ['user', Validators.required]
+    });
+
+    this.rolForm = this.fb.group({
       rol: ['user', Validators.required]
     });
 
@@ -55,6 +61,30 @@ export class PanelComponent implements OnInit {
     }
   }
 
+  editarUsuario(usuario: Usuario) {
+    this.editandoUsuario = usuario;
+    this.rolForm.patchValue({ rol: usuario.rol });
+  }
+
+  async guardarCambios() {
+    if (!this.editandoUsuario || this.rolForm.invalid) return;
+
+    const nuevoRol = this.rolForm.value.rol;
+
+    try {
+      await this.auth.saveUser(this.editandoUsuario.uid, this.editandoUsuario.email, nuevoRol);
+      this.mensaje = 'Rol actualizado correctamente';
+      this.editandoUsuario = null;
+    } catch (err) {
+      console.error('❌ Error al actualizar usuario:', err);
+      this.error = '❌ Error al actualizar el rol';
+    }
+  }
+
+  cancelarEdicion() {
+    this.editandoUsuario = null;
+  }
+
   eliminarUsuario(uid: string) {
     if (confirm('¿Seguro que quieres eliminar este usuario?')) {
       this.auth.deleteUser(uid).then(() => {
@@ -71,5 +101,9 @@ export class PanelComponent implements OnInit {
       localStorage.removeItem('rol');
       this.router.navigate(['/']);
     });
+  }
+
+  volver() {
+    this.router.navigate(['/inicio']);
   }
 }

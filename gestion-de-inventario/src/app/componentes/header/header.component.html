@@ -1,10 +1,32 @@
 <header class="header-container">
     <h1>Gestión de Inventarios</h1>
-    <img src="../../../assets/GestiónInventarioLogo2.png">
-    <div class="auth-buttons">
-      <button class="btn-login" (click)="mostrarAuth(true)">Iniciar sesión</button>
-      <button class="btn-register" (click)="mostrarAuth(false)">Crear cuenta</button>
-    </div>
-  </header>
+    <img src="assets/logoGDI.png" alt="Logo de Gestión Inventario">
 
-  <app-auth *ngIf="mostrarFormulario" [modoLogin]="modoLogin" (cerrar)="cerrarAuth()"></app-auth>
+
+  <div *ngIf="usuarioLogueado; else loginRegister">
+    <p>Bienvenido, {{ usuarioLogueado.email }}!</p>
+    <button class="btn btn-danger" (click)="cerrarSesion()">Cerrar sesión</button>
+  </div>
+
+  <ng-template #loginRegister>
+    <div class="auth-buttons">
+      <button class="btn-login" data-bs-toggle="modal" data-bs-target="#authModal" (click)="mostrarAuth(true)">Iniciar sesión</button>
+      <button class="btn-register" data-bs-toggle="modal" data-bs-target="#authModal" (click)="mostrarAuth(false)">Crear cuenta</button>
+    </div>
+  </ng-template>
+</header>
+
+  <!-- Modal de Bootstrap para mostrar el pop up del login o registro -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ modoLogin ? 'Iniciar Sesión' : 'Crear Cuenta' }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <app-auth [modoLogin]="modoLogin" (cambiarModo)="cambiarModo($event)" (usuarioLogeado)="manejarLogin($event)"></app-auth>
+        </div>
+      </div>
+    </div>
+  </div>
