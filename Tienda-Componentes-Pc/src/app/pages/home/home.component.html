@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Bienvenido a Tienda de Ordenadores</h1>
+    <p class="lead text-muted">Descubre las mejores ofertas en equipos gaming, portátiles y mucho más.</p>
+    <a routerLink="/productos" class="btn btn-outline-primary btn-lg mt-3">Ver todos los productos</a>
+  </div>
+
+  <div class="row" *ngIf="ofertas$ | async as ofertas">
+    <h3 class="mb-4">🔥 Productos en oferta</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col" *ngFor="let producto of ofertas">
+        <div class="card h-100 shadow-sm">
+          <img [src]="producto.imagen" class="card-img-top" [alt]="producto.nombre">
+          <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre }}</h5>
+            <p class="card-text">
+              <span class="text-danger fw-bold">{{ producto.precio }} €</span>
+              <span class="text-muted text-decoration-line-through">{{ producto.precioOriginal }} €</span>
+              <span class="badge bg-success ms-2">
+                -{{ 100 - ((producto.precio / producto.precioOriginal) * 100) | number:'1.0-0' }}%
+              </span>
+            </p>
+            <a [routerLink]="['/productos', producto.id]" class="btn btn-primary w-100">Ver más</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
