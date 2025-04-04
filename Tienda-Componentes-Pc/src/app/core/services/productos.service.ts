@@ -1,6 +1,5 @@
-// src/app/core/services/productos.service.ts
-import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, docData, Firestore } from '@angular/fire/firestore';
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, collectionData, doc, updateDoc, addDoc, deleteDoc, docData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Producto {
@@ -18,7 +17,8 @@ export interface Producto {
   providedIn: 'root',
 })
 export class ProductosService {
-  constructor(private firestore: Firestore) {}
+  private firestore = inject(Firestore);
+  private productosCollection = collection(this.firestore, 'productos');
 
   getProductos(): Observable<Producto[]> {
     const productosRef = collection(this.firestore, 'productos');
@@ -34,5 +34,19 @@ export class ProductosService {
     const productosRef = collection(this.firestore, 'productos');
     return collectionData(productosRef, { idField: 'id' }) as Observable<Producto[]>;
     // Filtrar ofertas se puede hacer en el componente con RxJS si lo prefieres.
+  }
+
+  updateProducto(producto: Producto): Promise<void> {
+    const productDocRef = doc(this.firestore, `productos/${producto.id}`);
+    return updateDoc(productDocRef, { ...producto });
+  }
+
+  addProducto(producto: Omit<Producto, 'id'>): Promise<any> {
+    return addDoc(this.productosCollection, producto);
+  }
+
+  deleteProducto(id: string): Promise<void> {
+    const productDocRef = doc(this.firestore, `productos/${id}`);
+    return deleteDoc(productDocRef);
   }
 }

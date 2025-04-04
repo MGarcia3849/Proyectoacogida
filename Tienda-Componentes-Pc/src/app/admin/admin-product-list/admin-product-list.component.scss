@@ -1,0 +1,85 @@
+@import '../_admin-variables.scss';
+
+.container {
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 25px;
+    color: $heading-color;
+  }
+
+  .table {
+    margin-bottom: 30px;
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: $border-radius;
+    overflow: hidden;
+  }
+
+  .table thead th {
+    background-color: $table-header-bg-color;
+    color: $table-header-text-color;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 500;
+    border-bottom: 2px solid darken($table-header-bg-color, 15%);
+  }
+
+  .table tbody tr {
+    background-color: #f8f9fa;
+  }
+
+  .table tbody tr:nth-child(even) {
+    background-color: $table-row-even-bg-color;
+  }
+
+  .table tbody td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid $table-border-color;
+  }
+
+  .table tbody td:last-child {
+    white-space: nowrap;
+  }
+
+  .table img {
+    max-width: 60px;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+
+  .badge {
+    font-size: 0.9em;
+    font-weight: normal;
+  }
+
+  .btn-sm {
+    margin-right: 8px;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+  }
+
+  .btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-hover-color;
+      border-color: $primary-hover-color;
+    }
+  }
+
+  .btn-danger {
+    background-color: $danger-color;
+    border-color: $danger-color;
+
+    &:hover {
+      background-color: $danger-hover-color;
+      border-color: darken($danger-hover-color, 5%);
+    }
+  }
+}
