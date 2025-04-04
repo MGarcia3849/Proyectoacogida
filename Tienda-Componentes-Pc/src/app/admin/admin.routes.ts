@@ -1,21 +1,26 @@
 import { Routes } from '@angular/router';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductFormComponent } from './product-form/product-form.component';
+import { AdminProductListComponent } from './admin-product-list/admin-product-list.component';
+import { AdminProductFormComponent } from './admin-product-form/admin-product-form.component';
+import { AdminComponent } from './admin.component';
 
 export const ADMIN_ROUTES: Routes = [
+  { path: '',
+    component: AdminComponent,
+    title: 'Admin de productos'
+  },
   {
-    path: '',
-    component: ProductListComponent,
+    path: 'lista',
+    component: AdminProductListComponent,
     title: 'Gestión de productos'
   },
   {
     path: 'nuevo',
-    component: ProductFormComponent,
+    component: AdminProductFormComponent,
     title: 'Nuevo producto'
   },
   {
     path: 'editar/:id',
-    component: ProductFormComponent,
+    component: AdminProductFormComponent,
     title: 'Editar producto'
   }
 ];
