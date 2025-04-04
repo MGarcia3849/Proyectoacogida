@@ -19,7 +19,7 @@
           <td>{{ producto.precio | number:'1.2-2' }} €</td>
           <td>{{ producto.precioOriginal | number:'1.2-2' }} €</td>
           <td><img [src]="producto.imagen" alt="{{ producto.nombre }}" style="max-width: 50px; max-height: 50px;"></td>
-          <td><span *ngIf="producto.oferta" class="badge bg-success">Sí</span><span *ngIf="!producto.oferta" class="badge bg-secondary">No</span></td>
+          <td><span *ngIf="producto.enOferta" class="badge bg-success">Sí</span><span *ngIf="!producto.enOferta" class="badge bg-secondary">No</span></td>
           <td>
             <button class="btn btn-sm btn-primary me-2" (click)="iniciarEdicion(producto)">Editar</button>
             <button class="btn btn-sm btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>
