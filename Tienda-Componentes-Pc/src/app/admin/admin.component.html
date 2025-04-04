@@ -1,0 +1,28 @@
+<div class="container mt-5">
+    <h1>Panel de Administración de Productos</h1>
+    <hr>
+  
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <button class="btn btn-primary" (click)="showProductForm()">
+          <i class="bi bi-plus-lg"></i> Añadir Nuevo Producto
+        </button>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="showList">
+          <app-admin-product-list (editProduct)="editProduct($event)"></app-admin-product-list>
+        </div>
+        <div *ngIf="showForm">
+          <h3>{{ isEditing ? 'Editar Producto' : 'Añadir Nuevo Producto' }}</h3>
+          <app-admin-product-form
+            [product]="selectedProduct"
+            (productSaved)="onProductSaved()"
+            (formCancelled)="onFormCancelled()"
+          ></app-admin-product-form>
+        </div>
+      </div>
+    </div>
+  </div>

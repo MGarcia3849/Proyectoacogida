@@ -1,0 +1,38 @@
+@use './_admin-variables.scss' as adminVariables;
+
+.container.mt-5 {
+  padding: 30px;
+}
+
+h1 {
+  color: adminVariables.$heading-color;
+  margin-bottom: 20px;
+}
+
+hr {
+  margin-bottom: 25px;
+  border-top: 1px solid #ccc;
+}
+
+.btn-primary {
+  background-color: adminVariables.$primary-color;
+  border-color: adminVariables.$primary-color;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+
+  i {
+    margin-right: 5px;
+  }
+
+  &:hover {
+    background-color: adminVariables.$primary-hover-color;
+    border-color: adminVariables.$primary-hover-color;
+  }
+}
+
+h3 {
+  color: adminVariables.$text-color;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
