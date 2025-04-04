@@ -11,7 +11,7 @@ import { ProductosService, Producto } from '../../core/services/productos.servic
   standalone: true
 })
 export class AdminProductFormComponent implements OnInit {
-  @Input() product: Producto = { id: '', nombre: '', categoria: '', precio: 0, precioOriginal: 0, imagen: '', oferta: false };
+  @Input() product: Producto = { id: '', nombre: '', categoria: '', precio: 0, precioOriginal: 0, imagen: '', enOferta: false, descripcion: '' };
   @Output() productSaved = new EventEmitter<void>();
   @Output() formCancelled = new EventEmitter<void>();
 
@@ -26,7 +26,8 @@ export class AdminProductFormComponent implements OnInit {
       precio: [this.product.precio, [Validators.required, Validators.min(0)]],
       precioOriginal: [this.product.precioOriginal, [Validators.min(0)]],
       imagen: [this.product.imagen],
-      oferta: [this.product.oferta]
+      oferta: [this.product.enOferta],
+      descripcion: [this.product.descripcion] 
     });
   }
 
