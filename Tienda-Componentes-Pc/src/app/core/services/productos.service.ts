@@ -1,23 +1,38 @@
-import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+// src/app/core/services/productos.service.ts
+import { Injectable } from '@angular/core';
+import { collection, collectionData, doc, docData, Firestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Producto {
   id: string;
   nombre: string;
-  categoria: string;
   precio: number;
-  precioOriginal: number;
+  precioOriginal?: number;
   imagen: string;
-  oferta: boolean;
+  descripcion: string;
+  categoria: string;
+  enOferta?: boolean;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class ProductosService {
-  private firestore = inject(Firestore);
+  constructor(private firestore: Firestore) {}
 
   getProductos(): Observable<Producto[]> {
-    const ref = collection(this.firestore, 'productos');
-    return collectionData(ref, { idField: 'id' }) as Observable<Producto[]>;
+    const productosRef = collection(this.firestore, 'productos');
+    return collectionData(productosRef, { idField: 'id' }) as Observable<Producto[]>;
+  }
+
+  getProductoById(id: string): Observable<Producto> {
+    const productoRef = doc(this.firestore, `productos/${id}`);
+    return docData(productoRef, { idField: 'id' }) as Observable<Producto>;
+  }
+
+  getOfertasDestacadas(): Observable<Producto[]> {
+    const productosRef = collection(this.firestore, 'productos');
+    return collectionData(productosRef, { idField: 'id' }) as Observable<Producto[]>;
+    // Filtrar ofertas se puede hacer en el componente con RxJS si lo prefieres.
   }
 }

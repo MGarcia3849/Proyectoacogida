@@ -1,16 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/">
-      <img src="assets/logo.png" alt="Logo" width="32" class="me-2">
-      Tienda de Ordenadores
-    </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink="/">🖥️ Tienda de Ordenadores</a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="menuNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav me-3">
         <li class="nav-item">
           <a class="nav-link" routerLink="/">Inicio</a>
         </li>
@@ -22,16 +19,8 @@
         </li>
       </ul>
 
-      <div class="d-flex align-items-center" *ngIf="user$ | async as usuario; else login">
-        <span class="me-2 text-muted small">{{ usuario.email }}</span>
-        <button class="btn btn-outline-secondary btn-sm" (click)="logout()">Salir</button>
-      </div>
-
-      <ng-template #login>
-        <button class="btn btn-outline-primary btn-sm" (click)="loginGoogle()">
-          Iniciar sesión con Google
-        </button>
-      </ng-template>
+      <!-- Botón de Login a la derecha -->
+      <a class="btn btn-outline-primary" routerLink="/login">Iniciar sesión</a>
     </div>
   </div>
 </nav>
