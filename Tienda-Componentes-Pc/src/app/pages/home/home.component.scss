@@ -1,0 +1,17 @@
+.card {
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  img {
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.4em 0.7em;
+  }
+}

@@ -1,19 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { ProductosService, Producto } from '../../core/services/productos.service';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, RouterModule],
-  templateUrl: './home.component.html'
+  standalone: true,
+  imports: [CommonModule, RouterModule, NgIf, NgFor],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   private productosService = inject(ProductosService);
+  productosEnOferta$: Observable<Producto[]> = this.productosService.getOfertasDestacadas();
 
-  ofertas$: Observable<Producto[]> = this.productosService.getProductos().pipe(
-    map(productos => productos.filter(p => p.oferta))
-  );
+  categorias = [
+    { nombre: 'Ordenadores', slug: 'ordenadores', img: 'assets/categorias/ordenadores.jpg' },
+    { nombre: 'Televisores', slug: 'televisores', img: 'assets/categorias/televisores.jpg' },
+    { nombre: 'Gaming', slug: 'gaming', img: 'assets/categorias/gaming.jpg' },
+    { nombre: 'Componentes', slug: 'componentes', img: 'assets/categorias/componentes.jpg' }
+  ];
 }
