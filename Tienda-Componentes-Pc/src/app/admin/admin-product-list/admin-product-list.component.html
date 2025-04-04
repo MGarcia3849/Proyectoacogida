@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>Lista de Productos</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Precio Original</th>
+          <th>Imagen</th>
+          <th>Oferta</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos$ | async">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.categoria }}</td>
+          <td>{{ producto.precio | number:'1.2-2' }} €</td>
+          <td>{{ producto.precioOriginal | number:'1.2-2' }} €</td>
+          <td><img [src]="producto.imagen" alt="{{ producto.nombre }}" style="max-width: 50px; max-height: 50px;"></td>
+          <td><span *ngIf="producto.oferta" class="badge bg-success">Sí</span><span *ngIf="!producto.oferta" class="badge bg-secondary">No</span></td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2" (click)="iniciarEdicion(producto)">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
