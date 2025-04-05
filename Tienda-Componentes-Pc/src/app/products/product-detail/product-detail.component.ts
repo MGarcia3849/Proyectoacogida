@@ -1,25 +1,28 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { doc, docData, Firestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { Producto } from '../../core/services/productos.service';
+import { ProductosService, Producto } from '../../core/services/productos.service';
+import { Observable, of, switchMap } from 'rxjs';
 
 @Component({
-  standalone: true,
   selector: 'app-product-detail',
+  standalone: true,
   imports: [CommonModule],
-  templateUrl: './product-detail.component.html'
+  templateUrl: './product-detail.component.html',
+  styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent {
   private route = inject(ActivatedRoute);
-  private firestore = inject(Firestore);
+  private productosService = inject(ProductosService);
 
-  producto$: Observable<Producto>;
+  producto$!: Observable<Producto | null>;
 
   constructor() {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    const ref = doc(this.firestore, `productos/${id}`);
-    this.producto$ = docData(ref, { idField: 'id' }) as Observable<Producto>;
+    this.producto$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = params.get('id');
+        return id ? this.productosService.getProductoById(id) : of(null);
+      })
+    );
   }
 }

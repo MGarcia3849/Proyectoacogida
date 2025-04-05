@@ -92,9 +92,9 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/assets"
-              },
-              "src/assets"
+                "input": "src/public"
+              }
+
             ],
           "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

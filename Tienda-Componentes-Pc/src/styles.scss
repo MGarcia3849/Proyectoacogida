@@ -1,1 +1,87 @@
-/* You can add global styles to this file, and also import other style files */
+@use "bootstrap/scss/bootstrap";
+
+// Estilos base globales
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+a {
+  color: #0d6efd;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Botones
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+.btn-outline-secondary {
+  border-radius: 8px;
+}
+
+// Tarjetas y productos
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+// Categorías destacadas
+.categorias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.categoria-box {
+  width: 150px;
+  text-align: center;
+  font-weight: 500;
+  color: #333;
+}
+
+// Banners
+.banner-principal {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+// Encabezados
+.section-title {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
