@@ -1,0 +1,8 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Permitir lectura/escritura a todos los usuarios (solo para pruebas)
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
