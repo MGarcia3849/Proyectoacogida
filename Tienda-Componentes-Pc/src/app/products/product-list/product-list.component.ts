@@ -9,7 +9,8 @@ import { ProductosService, Producto } from '../../core/services/productos.servic
   standalone: true,
   selector: 'app-product-list',
   imports: [CommonModule, RouterModule],
-  templateUrl: './product-list.component.html'
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
   private productosService = inject(ProductosService);
