@@ -1,1 +1,20 @@
-<p>product-list works!</p>
+<div class="container">
+    <h1 class="title">Productos</h1>
+  
+    <div class="product-list" *ngIf="productos$ | async as productos; else loading">
+      <div class="product-card" *ngFor="let producto of productos">
+        <img [src]="producto.imagen" [alt]="producto.nombre" class="product-image">
+        <h2 class="product-title">{{ producto.nombre }}</h2>
+        <p class="product-price">${{ producto.precio }}</p>
+        <button [routerLink]="['/producto', producto.id]" class="product-button">
+            Ver detalles
+          </button>
+          
+      </div>
+    </div>
+  
+    <ng-template #loading>
+      <p>Cargando productos...</p>
+    </ng-template>
+  </div>
+  

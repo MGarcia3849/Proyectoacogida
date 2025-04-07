@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './core/layout/main-layout/main-layout.component';
+import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
 export const appRoutes: Routes = [
   {
@@ -16,6 +17,7 @@ export const appRoutes: Routes = [
         loadChildren: () =>
           import('./products/products.routes').then((m) => m.PRODUCTS_ROUTES)
       },
+      { path: 'producto/:id', component: ProductDetailComponent },
       {
         path: 'carrito',
         loadComponent: () =>
@@ -25,14 +27,20 @@ export const appRoutes: Routes = [
         path: 'admin',
         loadChildren: () =>
           import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES)
-      }
+      },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./auth/login/login.component').then((m) => m.LoginComponent)
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./auth/register/register.component').then((m) => m.RegisterComponent)
+      },
     ]
   },
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./auth/login/login.component').then((m) => m.LoginComponent)
-  },
+  
   {
     path: '**',
     loadComponent: () =>
