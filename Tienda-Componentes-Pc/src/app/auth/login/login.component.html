@@ -1,1 +1,95 @@
-<p>login works!</p>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg login-card">
+      <h3 class="text-center mb-4">Iniciar Sesión</h3>
+  
+      <form (ngSubmit)="login()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="email"
+            name="email"
+            required
+          />
+        </div>
+  
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [(ngModel)]="password"
+            name="password"
+            required
+          />
+        </div>
+  
+        <div *ngIf="error" class="alert alert-danger py-2">
+          {{ error }}
+        </div>
+  
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+      </form>
+  
+      <hr class="my-4" />
+  
+      <button class="btn btn-outline-danger w-100 mb-2" (click)="loginWithGoogle()">
+        <i class="bi bi-google me-2"></i> Iniciar sesión con Google
+      </button>
+  
+      <p class="text-center mt-3">
+        <div class="text-center mt-4">
+            <button class="btn btn-link d-block mb-2" routerLink="/register">
+              ¿No tienes cuenta? <strong>Regístrate aquí</strong>
+            </button>
+          
+            <button class="btn btn-outline-primary" routerLink="/">
+              ← Volver al inicio
+            </button>
+          </div>
+    </div>
+  </div>
+  
+
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+  <div class="mb-3">
+    <label for="email" class="form-label">Correo electrónico</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      [(ngModel)]="email"
+      name="email"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Contraseña</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      [(ngModel)]="password"
+      name="password"
+      required
+    />
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
+    {{ loading ? 'Cargando...' : 'Entrar' }}
+  </button>
+</form>
+
+<button class="btn btn-danger w-100" (click)="loginWithGoogle()" [disabled]="loading">
+  <img src="https://img.icons8.com/color/16/000000/google-logo.png" class="me-2" />
+  Iniciar sesión con Google
+</button>
+

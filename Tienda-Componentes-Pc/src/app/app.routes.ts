@@ -25,14 +25,20 @@ export const appRoutes: Routes = [
         path: 'admin',
         loadChildren: () =>
           import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES)
-      }
+      },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./auth/login/login.component').then((m) => m.LoginComponent)
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./auth/register/register.component').then((m) => m.RegisterComponent)
+      },
     ]
   },
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./auth/login/login.component').then((m) => m.LoginComponent)
-  },
+  
   {
     path: '**',
     loadComponent: () =>
