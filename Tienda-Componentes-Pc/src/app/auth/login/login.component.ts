@@ -28,10 +28,11 @@ export class LoginComponent {
     this.authService.loginWithGoogle()
       .then(() => this.router.navigate(['/home']))
       .catch(err => this.error = err.message);
-
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
+  }
+}
+/* import { FormsModule } from '@angular/forms';  // Importa FormsModule
 import { CommonModule } from '@angular/common';  // Importa CommonModule
-import { AuthService } from '../../services/auth.service';  // Importa tu servicio de autenticación
+import { AuthService } from '../../core/services/auth.service';  // Importa tu servicio de autenticación
 
 @Component({
   selector: 'app-login',
@@ -73,4 +74,5 @@ export class LoginComponent {
       });
 
   }
-}
+}*/
+
