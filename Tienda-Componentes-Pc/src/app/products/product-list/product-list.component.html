@@ -6,9 +6,10 @@
         <img [src]="producto.imagen" [alt]="producto.nombre" class="product-image">
         <h2 class="product-title">{{ producto.nombre }}</h2>
         <p class="product-price">${{ producto.precio }}</p>
-        <button routerLink="/producto/{{ producto.id }}" class="product-button">
-          Ver detalles
-        </button>
+        <button [routerLink]="['/producto', producto.id]" class="product-button">
+            Ver detalles
+          </button>
+          
       </div>
     </div>
   
