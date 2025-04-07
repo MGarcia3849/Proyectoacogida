@@ -1,4 +1,4 @@
-<div class="container mt-5" *ngIf="producto$ | async as producto; else sinProducto">
+<!-- <div class="container mt-5" *ngIf="producto$ | async as producto; else sinProducto">
   <div class="row">
     <div class="col-md-6 mb-3">
       <img
@@ -46,4 +46,40 @@
   <div class="text-center mt-5">
     <p class="text-muted">No se ha encontrado el producto.</p>
   </div>
+</ng-template> -->
+<div class="product-detail" *ngIf="producto$ | async as producto; else loading">
+  <div class="product-card">
+    
+    <!-- Imagen centrada -->
+    <div class="image-container">
+      <img [src]="producto.imagen" [alt]="producto.nombre" class="product-image">
+    </div>
+
+    <!-- Información del producto -->
+    <div class="product-info">
+      <h1 class="product-title">{{ producto.nombre }}</h1>
+      <p class="product-description">{{ producto.descripcion }}</p>
+      <p class="product-price">💰 Precio: <strong>${{ producto.precio }}</strong></p>
+      
+      <!-- Botones de acción -->
+      <div class="actions">
+        <button (click)="volverATienda()" class="btn btn-primary">🏠 Volver a la tienda</button>
+
+
+        
+
+        <button class="btn btn-secondary">🛒 Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <p>⏳ Cargando detalles del producto...</p>
+  </div>
 </ng-template>
+
+
+
+

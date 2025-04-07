@@ -8,9 +8,5 @@ export const PRODUCTS_ROUTES: Routes = [
     component: ProductListComponent,
     title: 'Listado de productos'
   },
-  {
-    path: ':id',
-    component: ProductDetailComponent,
-    title: 'Detalle del producto'
-  }
+  { path: 'producto/:id', component: ProductDetailComponent },
 ];
