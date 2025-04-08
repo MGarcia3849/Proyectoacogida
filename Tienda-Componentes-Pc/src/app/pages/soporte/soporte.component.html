@@ -1,0 +1,68 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg rounded-4 border-0">
+          <div class="card-body p-5">
+            <h2 class="card-title text-center mb-4">Centro de Soporte</h2>
+            <p class="text-muted text-center mb-4">
+              ¿Tienes un problema o necesitas información? Completa el siguiente formulario y nos pondremos en contacto contigo.
+            </p>
+  
+            <form (ngSubmit)="enviarIncidencia()" #soporteForm="ngForm">
+              <!-- Email del cliente -->
+              <div class="mb-4">
+                <label for="email" class="form-label fw-bold">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control form-control-lg"
+                  [(ngModel)]="email"
+                  name="email"
+                  required
+                />
+              </div>
+  
+              <!-- Motivo -->
+              <div class="mb-4">
+                <label for="motivo" class="form-label fw-bold">Motivo de la solicitud</label>
+                <select
+                  id="motivo"
+                  class="form-select form-select-lg"
+                  required
+                  [(ngModel)]="motivo"
+                  name="motivo"
+                >
+                  <option value="" disabled selected>Selecciona un motivo</option>
+                  <option value="informacion">Solicitar información</option>
+                  <option value="incidencia">Reportar incidencia</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+  
+              <!-- Descripción -->
+              <div class="mb-4">
+                <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                <textarea
+                  id="descripcion"
+                  class="form-control"
+                  rows="5"
+                  placeholder="Describe el problema o solicitud con detalle..."
+                  [(ngModel)]="descripcion"
+                  name="descripcion"
+                  required
+                ></textarea>
+              </div>
+  
+              <!-- Botón -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="soporteForm.invalid">
+                  Enviar solicitud
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -38,6 +38,11 @@ export const appRoutes: Routes = [
         loadComponent: () =>
           import('./auth/register/register.component').then((m) => m.RegisterComponent)
       },
+      {
+        path: 'soporte',
+        loadComponent: () =>
+          import('./pages/soporte/soporte.component').then((m) => m.SoporteComponent)
+      },
     ]
   },
   
