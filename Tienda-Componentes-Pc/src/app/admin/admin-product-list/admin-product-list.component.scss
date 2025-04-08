@@ -1,11 +1,12 @@
-@import '../_admin-variables.scss';
+@use '../_admin-variables.scss' as vars;
+@use 'sass:color';
 
 .container {
   padding: 20px;
 
   h2 {
     margin-bottom: 25px;
-    color: $heading-color;
+    color: vars.$heading-color;
   }
 
   .table {
@@ -13,17 +14,17 @@
     border-collapse: collapse;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-radius: $border-radius;
+    border-radius: vars.$border-radius;
     overflow: hidden;
   }
 
   .table thead th {
-    background-color: $table-header-bg-color;
-    color: $table-header-text-color;
+    background-color: vars.$table-header-bg-color;
+    color: vars.$table-header-text-color;
     padding: 12px 15px;
     text-align: left;
     font-weight: 500;
-    border-bottom: 2px solid darken($table-header-bg-color, 15%);
+    border-bottom: 2px solid color.adjust(vars.$table-header-bg-color, $lightness: -15%);
   }
 
   .table tbody tr {
@@ -31,13 +32,13 @@
   }
 
   .table tbody tr:nth-child(even) {
-    background-color: $table-row-even-bg-color;
+    background-color: vars.$table-row-even-bg-color;
   }
 
   .table tbody td {
     padding: 12px 15px;
     vertical-align: middle;
-    border-bottom: 1px solid $table-border-color;
+    border-bottom: 1px solid vars.$table-border-color;
   }
 
   .table tbody td:last-child {
@@ -64,22 +65,22 @@
   }
 
   .btn-primary {
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: vars.$primary-color;
+    border-color: vars.$primary-color;
 
     &:hover {
-      background-color: $primary-hover-color;
-      border-color: $primary-hover-color;
+      background-color: vars.$primary-hover-color;
+      border-color: vars.$primary-hover-color;
     }
   }
 
   .btn-danger {
-    background-color: $danger-color;
-    border-color: $danger-color;
+    background-color: vars.$danger-color;
+    border-color: vars.$danger-color;
 
     &:hover {
-      background-color: $danger-hover-color;
-      border-color: darken($danger-hover-color, 5%);
+      background-color: vars.$danger-hover-color;
+      border-color: color.adjust(vars.$danger-hover-color, $lightness: -5%);
     }
   }
 }
