@@ -1,0 +1,137 @@
+// Variables para colores
+$primary-color: #007bff;
+$primary-hover: #0056b3;
+$light-bg: #f7f7f7;
+$text-dark: #333;
+$text-muted: #6c757d;
+$white: #ffffff;
+
+// Estilos generales
+body {
+  background-color: $light-bg;
+  font-family: 'Arial', sans-serif;
+  color: $text-dark;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $light-bg;
+}
+
+// Estilo para la tarjeta principal
+.custom-card {
+  max-width: 600px;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  background-color: $white;
+
+  .custom-card-header {
+    background-color: $primary-color;
+    color: $white;
+    border-radius: 20px 20px 0 0;
+    padding: 2rem;
+    text-align: center;
+
+    h4 {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+  }
+
+  .card-body {
+    padding: 3rem;
+
+    .form-label {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      
+      .input-group-text {
+        background-color: $primary-color;
+        color: $white;
+        border-radius: 20px 0 0 20px;
+      }
+
+      .form-control {
+        border-radius: 30px;
+        padding: 12px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+
+        &:focus {
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.5);
+          border-color: $primary-color;
+        }
+      }
+
+      select {
+        border-radius: 30px;
+        padding: 12px;
+        font-size: 1rem;
+      }
+
+      textarea {
+        border-radius: 20px;
+        padding: 1rem;
+        font-size: 1rem;
+        width: 100%;
+        resize: none;
+
+        &:focus {
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.5);
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    // Botón de Enviar
+    .d-grid {
+      margin-top: 1.5rem;
+
+      .btn {
+        border-radius: 30px;
+        font-weight: 500;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        background-color: $primary-color;
+        border-color: $primary-color;
+        box-shadow: 0 4px 10px rgba($primary-color, 0.15);
+
+        &:hover {
+          background-color: $primary-hover;
+          border-color: $primary-hover;
+        }
+      }
+    }
+  }
+}
+
+// Estilo para hacer el formulario responsive
+@media (max-width: 576px) {
+  .custom-card {
+    margin: 15px;
+  }
+
+  .custom-card-header {
+    padding: 1.5rem;
+    h4 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+}
