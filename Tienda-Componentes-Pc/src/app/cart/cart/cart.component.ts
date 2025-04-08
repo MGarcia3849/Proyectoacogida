@@ -1,16 +1,32 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CartService } from '../../core/services/cart.service';
+import { CommonModule, NgIf, NgFor } from '@angular/common';
 
 @Component({
-  standalone: true,
   selector: 'app-cart',
-  imports: [CommonModule],
-  template: `
-    <div class="container mt-5">
-      <h2 class="mb-4">🛒 Tu Cesta</h2>
-      <p>Aquí aparecerán los productos que añadas a la cesta.</p>
-      <!-- En el futuro añadiremos la lógica con Firebase y pasarela de pago -->
-    </div>
-  `
+  imports: [CommonModule, NgIf, NgFor],
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.scss']
 })
-export class CartComponent {}
+export class CartComponent {
+  carrito: any[] = [];
+
+  constructor(private cartService: CartService) {
+    this.cartService.cart$.subscribe(carrito => {
+      this.carrito = carrito || [];
+    });
+  }
+
+  vaciarCarrito() {
+    this.cartService.vaciarCarrito();
+  }
+
+  comprar() {
+    if (this.carrito.length > 0) {
+      alert('¡Compra realizada con éxito! Gracias por tu compra.');
+      this.cartService.vaciarCarrito();
+    } else {
+      alert('El carrito está vacío. Agrega productos antes de comprar.');
+    }
+  }
+}
