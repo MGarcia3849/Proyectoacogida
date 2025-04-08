@@ -1,12 +1,13 @@
-@import '../_admin-variables.scss';
+@use '../_admin-variables.scss' as vars;
+@use 'sass:color';
 
 form {
   max-width: 700px;
   padding: 30px;
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
+  border: 1px solid vars.$border-color;
+  border-radius: vars.$border-radius;
   margin-bottom: 30px;
-  background-color: $form-bg-color;
+  background-color: vars.$form-bg-color;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
   .mb-3 {
@@ -15,7 +16,7 @@ form {
 
   .form-label {
     font-weight: 500;
-    color: $text-color;
+    color: vars.$text-color;
   }
 
   .form-control {
@@ -23,44 +24,44 @@ form {
     border: 1px solid #ced4da;
 
     &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+      border-color: vars.$primary-color;
+      box-shadow: 0 0 0 0.2rem rgba(vars.$primary-color, 0.25);
     }
   }
 
   .text-danger {
     font-size: 0.9em;
-    color: $danger-color !important;
+    color: vars.$danger-color !important;
     margin-top: 0.25rem;
   }
 
   .form-check-label {
     font-weight: normal;
-    color: $text-color;
+    color: vars.$text-color;
   }
 
   .btn-primary {
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: vars.$primary-color;
+    border-color: vars.$primary-color;
 
     &:hover {
-      background-color: $primary-hover-color;
-      border-color: $primary-hover-color;
+      background-color: vars.$primary-hover-color;
+      border-color: vars.$primary-hover-color;
     }
   }
 
   .btn-secondary {
-    background-color: $secondary-color;
-    border-color: $secondary-color;
+    background-color: vars.$secondary-color;
+    border-color: vars.$secondary-color;
 
     &:hover {
-      background-color: $secondary-hover-color;
-      border-color: darken($secondary-hover-color, 5%);
+      background-color: vars.$secondary-hover-color;
+      border-color: color.adjust(vars.$secondary-hover-color, $lightness: -5%);
     }
   }
 }
 
 h2 {
   margin-bottom: 25px;
-  color: $heading-color;
+  color: vars.$heading-color;
 }
