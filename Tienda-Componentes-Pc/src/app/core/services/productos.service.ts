@@ -33,7 +33,6 @@ export class ProductosService {
   getOfertasDestacadas(): Observable<Producto[]> {
     const productosRef = collection(this.firestore, 'productos');
     return collectionData(productosRef, { idField: 'id' }) as Observable<Producto[]>;
-    // Filtrar ofertas se puede hacer en el componente con RxJS si lo prefieres.
   }
 
   updateProducto(producto: Producto): Promise<void> {
