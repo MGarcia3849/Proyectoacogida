@@ -1,0 +1,199 @@
+@use '../admin-variables' as adminVariables;
+
+:host {
+  display: block;
+  padding: 20px;
+}
+
+h2 {
+  color: adminVariables.$heading-color;
+  margin-bottom: 20px;
+}
+
+hr {
+  border-top: 1px solid adminVariables.$border-color;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border: 1px solid adminVariables.$table-border-color;
+  border-radius: adminVariables.$border-radius;
+  overflow: hidden; 
+}
+
+.table thead {
+  background-color: adminVariables.$table-header-bg-color;
+  color: adminVariables.$table-header-text-color;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid adminVariables.$table-border-color;
+}
+
+.table th {
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: adminVariables.$table-row-even-bg-color;
+}
+
+.table tbody tr:hover {
+  background-color: lighten(adminVariables.$table-row-even-bg-color, 5%);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: bold;
+  line-height: 1;
+  color: white;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: adminVariables.$border-radius;
+
+  &.bg-success {
+    background-color: green;
+  }
+
+  &.bg-secondary {
+    background-color: adminVariables.$secondary-color;
+  }
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: adminVariables.$text-color;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid adminVariables.$border-color;
+  border-radius: adminVariables.$border-radius;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &.btn-primary {
+    color: white;
+    background-color: adminVariables.$primary-color;
+    border-color: adminVariables.$primary-color;
+
+    &:hover {
+      background-color: adminVariables.$primary-hover-color;
+      border-color: adminVariables.$primary-hover-color;
+    }
+  }
+
+  &.btn-danger {
+    color: white;
+    background-color: adminVariables.$danger-color;
+    border-color: adminVariables.$danger-color;
+
+    &:hover {
+      background-color: adminVariables.$danger-hover-color;
+      border-color: adminVariables.$danger-hover-color;
+    }
+  }
+
+  &.btn-secondary {
+    color: adminVariables.$text-color;
+    background-color: adminVariables.$secondary-color;
+    border-color: adminVariables.$secondary-color;
+
+    &:hover {
+      background-color: adminVariables.$secondary-hover-color;
+      border-color: adminVariables.$secondary-hover-color;
+    }
+  }
+
+  &.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: adminVariables.$border-radius / 2;
+  }
+
+  &.me-2 {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Estilos para el modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: adminVariables.$border-radius;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 500px; 
+  max-width: 90%;
+}
+
+h3 {
+  color: adminVariables.$heading-color;
+  margin-bottom: 20px;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid adminVariables.$border-color;
+  border-radius: adminVariables.$border-radius / 2;
+  box-sizing: border-box;
+}
+
+.form-check {
+  padding-left: 1.5em;
+  margin-bottom: 1rem;
+}
+
+.form-check-input {
+  float: left;
+  margin-left: -1.5em;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 20px;
+}
+
+.error-message {
+  color: adminVariables.$danger-color;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
