@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Observable, map } from 'rxjs';
 
 import { ProductosService, Producto } from '../../core/services/productos.service';
 
@@ -13,8 +13,10 @@ import { ProductosService, Producto } from '../../core/services/productos.servic
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
   private productosService = inject(ProductosService);
+  private route = inject(ActivatedRoute);
+
   productos$: Observable<Producto[]> = this.productosService.getProductos();
   productosFiltrados$: Observable<Producto[]> = this.productos$;
 
@@ -29,24 +31,38 @@ export class ProductListComponent {
   precioMin = 0;
   precioMax = 0;
 
-  constructor() {
+  ngOnInit(): void {
+    // Leer query params
+    this.route.queryParams.subscribe(params => {
+      if (params['categoria']) {
+        this.filtros.categoria = params['categoria'];
+      }
+
+      this.aplicarFiltros(); // Aplicar con la categoría si viene de home
+    });
+
+    // Obtener datos y preparar filtros
     this.productos$.subscribe(productos => {
-      // Obtener categorías únicas
+      // Categorías únicas
       const categoriasUnicas = new Set(productos.map(p => p.categoria));
       this.categorias = Array.from(categoriasUnicas);
 
-      // Calcular rangos de precios
+      // Rango de precios
       const precios = productos.map(p => p.precio);
       this.precioMin = Math.min(...precios);
       this.precioMax = Math.max(...precios);
 
-      // Establecer valores iniciales
-      this.filtros.precioMin = this.precioMin;
-      this.filtros.precioMax = this.precioMax;
+      // Si no hay valores ya definidos (por query param), asignar por defecto
+      if (!this.filtros.precioMin && !this.filtros.precioMax) {
+        this.filtros.precioMin = this.precioMin;
+        this.filtros.precioMax = this.precioMax;
+      }
+
+      this.aplicarFiltros(); // Reaplicar cuando se cargan los productos
     });
   }
 
-  aplicarFiltros() {
+  aplicarFiltros(): void {
     const nombreLower = this.filtros.nombre.toLowerCase().trim();
 
     this.productosFiltrados$ = this.productos$.pipe(

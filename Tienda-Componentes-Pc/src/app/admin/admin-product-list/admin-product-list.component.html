@@ -1,5 +1,14 @@
 <div class="container">
-    <h2>Lista de Productos</h2>
+  <h2>Gestión de Productos</h2>
+  <hr>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <button class="btn btn-primary me-2" (click)="showProductForm()">
+        <i class="bi bi-plus-lg"></i> Añadir Nuevo Producto
+      </button>
+    </div>
+  </div>
+  <div *ngIf="showList">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -8,7 +17,7 @@
           <th>Precio</th>
           <th>Precio Original</th>
           <th>Imagen</th>
-          <th>Oferta</th>
+          <th>En Oferta</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -18,8 +27,11 @@
           <td>{{ producto.categoria }}</td>
           <td>{{ producto.precio | number:'1.2-2' }} €</td>
           <td>{{ producto.precioOriginal | number:'1.2-2' }} €</td>
-          <td><img [src]="producto.imagen" alt="{{ producto.nombre }}" style="max-width: 50px; max-height: 50px;"></td>
-          <td><span *ngIf="producto.enOferta" class="badge bg-success">Sí</span><span *ngIf="!producto.enOferta" class="badge bg-secondary">No</span></td>
+          <td><img [src]="producto.imagen" alt="{{ producto.nombre }}" style="max-width: 60px; max-height: 60px;"></td>
+          <td>
+            <span *ngIf="producto.enOferta" class="badge bg-success">Sí</span>
+            <span *ngIf="!producto.enOferta" class="badge bg-secondary">No</span>
+          </td>
           <td>
             <button class="btn btn-sm btn-primary me-2" (click)="iniciarEdicion(producto)">Editar</button>
             <button class="btn btn-sm btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>
@@ -28,3 +40,12 @@
       </tbody>
     </table>
   </div>
+  <div *ngIf="showForm">
+    <h3>{{ isEditing ? 'Editar Producto' : 'Añadir Nuevo Producto' }}</h3>
+    <app-admin-product-form
+      [product]="selectedProduct"
+      (productSaved)="onProductSaved()"
+      (formCancelled)="onFormCancelled()"
+    ></app-admin-product-form>
+  </div>
+</div>

@@ -1,13 +1,12 @@
-@use '../_admin-variables.scss' as vars;
-@use 'sass:color';
+@use './../admin-variables' as adminVariables;
 
 form {
   max-width: 700px;
   padding: 30px;
-  border: 1px solid vars.$border-color;
-  border-radius: vars.$border-radius;
+  border: 1px solid adminVariables.$border-color;
+  border-radius: adminVariables.$border-radius;
   margin-bottom: 30px;
-  background-color: vars.$form-bg-color;
+  background-color: adminVariables.$form-bg-color;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
   .mb-3 {
@@ -16,7 +15,7 @@ form {
 
   .form-label {
     font-weight: 500;
-    color: vars.$text-color;
+    color: adminVariables.$text-color;
   }
 
   .form-control {
@@ -24,44 +23,44 @@ form {
     border: 1px solid #ced4da;
 
     &:focus {
-      border-color: vars.$primary-color;
-      box-shadow: 0 0 0 0.2rem rgba(vars.$primary-color, 0.25);
+      border-color: adminVariables.$primary-color;
+      box-shadow: 0 0 0 0.2rem rgba(adminVariables.$primary-color, 0.25);
     }
   }
 
   .text-danger {
     font-size: 0.9em;
-    color: vars.$danger-color !important;
+    color: adminVariables.$danger-color !important;
     margin-top: 0.25rem;
   }
 
   .form-check-label {
     font-weight: normal;
-    color: vars.$text-color;
+    color: adminVariables.$text-color;
   }
 
   .btn-primary {
-    background-color: vars.$primary-color;
-    border-color: vars.$primary-color;
+    background-color: adminVariables.$primary-color;
+    border-color: adminVariables.$primary-color;
 
     &:hover {
-      background-color: vars.$primary-hover-color;
-      border-color: vars.$primary-hover-color;
+      background-color: adminVariables.$primary-hover-color;
+      border-color: adminVariables.$primary-hover-color;
     }
   }
 
   .btn-secondary {
-    background-color: vars.$secondary-color;
-    border-color: vars.$secondary-color;
+    background-color: adminVariables.$secondary-color;
+    border-color: adminVariables.$secondary-color;
 
     &:hover {
-      background-color: vars.$secondary-hover-color;
-      border-color: color.adjust(vars.$secondary-hover-color, $lightness: -5%);
+      background-color: adminVariables.$secondary-hover-color;
+      border-color: darken(adminVariables.$secondary-hover-color, 5%);
     }
   }
 }
 
 h2 {
   margin-bottom: 25px;
-  color: vars.$heading-color;
+  color: adminVariables.$heading-color;
 }
