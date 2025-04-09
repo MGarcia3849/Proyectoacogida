@@ -26,10 +26,7 @@
         <!-- Botones solo visibles si es admin -->
         <ng-container *ngIf="esAdmin$ | async">
           <li class="nav-item">
-            <a class="nav-link px-3 fs-5 text-white" routerLink="/admin"><i class="fas fa-cogs me-2"></i>Gestión Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3 fs-5 text-white" routerLink="/admin/usuarios"><i class="fas fa-users me-2"></i>Gestión Usuarios</a>
+            <a class="nav-link px-3 fs-5 text-white" routerLink="/admin"><i class="fas fa-cogs me-2"></i>Panel administración</a>
           </li>
         </ng-container>
       </ul>
