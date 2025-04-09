@@ -7,13 +7,11 @@ import {
 
 import { appRoutes } from './app.routes';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
-import { getAuth } from 'firebase/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFunctions, getFunctions } from '@angular/fire/functions'; // ✅ AÑADIDO
 
-const app = initializeApp(environment.firebase);
-const auth = getAuth(app);
-const firestore = getFirestore(app);
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,7 +21,8 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding()
     ),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
-
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideFunctions(() => getFunctions()) // ✅ AÑADIDO
   ]
 };

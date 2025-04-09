@@ -45,7 +45,7 @@ export const appRoutes: Routes = [
       },
     ]
   },
-  
+
   {
     path: '**',
     loadComponent: () =>

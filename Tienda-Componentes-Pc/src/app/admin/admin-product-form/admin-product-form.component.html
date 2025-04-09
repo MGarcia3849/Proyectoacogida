@@ -9,7 +9,14 @@
   
     <div class="mb-3">
       <label for="categoria" class="form-label">Categoría</label>
-      <input type="text" class="form-control" id="categoria" formControlName="categoria">
+      <select class="form-control" id="categoria" formControlName="categoria">
+        <option value="categoria1">Ordenadores</option>
+        <option value="categoria2">Portatiles</option>
+        <option value="categoria3">Monitor</option>
+        <option value="categoria4">Accesorios</option>
+        <option value="categoria5">Gaming</option>
+        <option value="categoria6">Componentes</option>
+      </select>
       <div *ngIf="productForm.get('categoria')?.invalid && (productForm.get('categoria')?.dirty || productForm.get('categoria')?.touched)" class="text-danger">
         La categoría es obligatoria.
       </div>

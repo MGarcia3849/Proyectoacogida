@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { ProductosService, Producto } from '../../core/services/productos.service';
 import { Observable } from 'rxjs';
-import { RouterModule } from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +13,15 @@ import { NgIf, NgFor } from '@angular/common';
 })
 export class HomeComponent {
   private productosService = inject(ProductosService);
+
   productosEnOferta$: Observable<Producto[]> = this.productosService.getOfertasDestacadas();
 
   categorias = [
-    { nombre: 'Ordenadores', slug: 'ordenadores', img: 'assets/categorias/ordenadores.jpg' },
-    { nombre: 'Televisores', slug: 'televisores', img: 'assets/categorias/televisores.jpg' },
-    { nombre: 'Gaming', slug: 'gaming', img: 'assets/categorias/gaming.jpg' },
-    { nombre: 'Componentes', slug: 'componentes', img: 'assets/categorias/componentes.jpg' }
+    { nombre: 'Portátiles', img: 'assets/categorias/portatiles.jpg' },
+    { nombre: 'Ordenadores', img: 'assets/categorias/ordenadores.jpg' },
+    { nombre: 'Monitores', img: 'assets/categorias/monitores.jpg' },
+    { nombre: 'Gaming', img: 'assets/categorias/gaming.jpg' },
+    { nombre: 'Componentes', img: 'assets/categorias/componentes.jpg' },
+    { nombre: 'Accesorios', img: 'assets/categorias/accesorios.jpg' }
   ];
 }

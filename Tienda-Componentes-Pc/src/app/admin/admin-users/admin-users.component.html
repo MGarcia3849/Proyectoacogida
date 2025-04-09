@@ -1,0 +1,68 @@
+<div class="container mt-5">
+    <h2>Gestión de Usuarios</h2>
+    <hr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Creado</th>
+          <th>Admin</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes$ | async">
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td>{{ cliente.direccion }}</td>
+          <td>{{ formatDate(cliente.creado) }}</td>
+          <td>
+            <span *ngIf="cliente.admin" class="badge bg-success">Sí</span>
+            <span *ngIf="!cliente.admin" class="badge bg-secondary">No</span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2" (click)="editarUsuario(cliente)">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(cliente.uid)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="modal-overlay" *ngIf="showEditModal">
+      <div class="modal-content">
+        <h3>Editar Usuario</h3>
+        <form [formGroup]="editForm" (ngSubmit)="saveUser()">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" formControlName="nombre">
+            <div *ngIf="editForm.controls['nombre'].invalid && (editForm.controls['nombre'].dirty || editForm.controls['nombre'].touched)" class="error-message">El nombre es requerido.</div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" formControlName="email">
+            <div *ngIf="editForm.controls['email'].invalid && (editForm.controls['email'].dirty || editForm.controls['email'].touched)" class="error-message">Introduce un email válido.</div>
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" id="telefono" class="form-control" formControlName="telefono">
+          </div>
+          <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" id="direccion" class="form-control" formControlName="direccion">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" id="admin" class="form-check-input" formControlName="admin">
+            <label for="admin" class="form-check-label">Administrador</label>
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="closeEditModal()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

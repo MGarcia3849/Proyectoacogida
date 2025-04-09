@@ -1,11 +1,11 @@
-@import '../_admin-variables.scss';
+@use './../admin-variables' as adminVariables;
 
 .container {
   padding: 20px;
 
   h2 {
     margin-bottom: 25px;
-    color: $heading-color;
+    color: adminVariables.$heading-color;
   }
 
   .table {
@@ -13,17 +13,17 @@
     border-collapse: collapse;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-radius: $border-radius;
+    border-radius: adminVariables.$border-radius;
     overflow: hidden;
   }
 
   .table thead th {
-    background-color: $table-header-bg-color;
-    color: $table-header-text-color;
+    background-color: adminVariables.$table-header-bg-color;
+    color: adminVariables.$table-header-text-color;
     padding: 12px 15px;
     text-align: left;
     font-weight: 500;
-    border-bottom: 2px solid darken($table-header-bg-color, 15%);
+    border-bottom: 2px solid darken(adminVariables.$table-header-bg-color, 15%);
   }
 
   .table tbody tr {
@@ -31,13 +31,13 @@
   }
 
   .table tbody tr:nth-child(even) {
-    background-color: $table-row-even-bg-color;
+    background-color: adminVariables.$table-row-even-bg-color;
   }
 
   .table tbody td {
     padding: 12px 15px;
     vertical-align: middle;
-    border-bottom: 1px solid $table-border-color;
+    border-bottom: 1px solid adminVariables.$table-border-color;
   }
 
   .table tbody td:last-child {
@@ -64,22 +64,22 @@
   }
 
   .btn-primary {
-    background-color: $primary-color;
-    border-color: $primary-color;
+    background-color: adminVariables.$primary-color;
+    border-color: adminVariables.$primary-color;
 
     &:hover {
-      background-color: $primary-hover-color;
-      border-color: $primary-hover-color;
+      background-color: adminVariables.$primary-hover-color;
+      border-color: adminVariables.$primary-hover-color;
     }
   }
 
   .btn-danger {
-    background-color: $danger-color;
-    border-color: $danger-color;
+    background-color: adminVariables.$danger-color;
+    border-color: adminVariables.$danger-color;
 
     &:hover {
-      background-color: $danger-hover-color;
-      border-color: darken($danger-hover-color, 5%);
+      background-color: adminVariables.$danger-hover-color;
+      border-color: darken(adminVariables.$danger-hover-color, 5%);
     }
   }
 }
