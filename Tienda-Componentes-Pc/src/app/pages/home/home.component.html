@@ -2,98 +2,63 @@
   <div class="text-center mb-5">
     <h1 class="display-4 fw-bold">Bienvenido a Tienda de Ordenadores!</h1>
     <p class="lead text-muted">Descubre las mejores ofertas en equipos gaming, portátiles y mucho más.</p>
-    <a routerLink="/productos" class="btn btn-outline-primary btn-lg mt-3">Ver todos los productos</a><br>
-<div class="container mt-4">
-  <!-- Banner principal -->
-  <div class="mb-4">
-    <img src="/banner.gif" alt="Banner Principal" class="img-fluid w-100 rounded shadow" />
+    <a routerLink="/productos" class="btn btn-outline-primary btn-lg mt-3">Ver todos los productos</a>
   </div>
 
-  <!-- Categorías destacadas -->
-  <h2 class="mb-4 text-center">Categorías destacadas</h2>
-  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3 mb-5 text-center">
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="assets/categorias/portatiles.jpg" class="card-img-top" alt="Portátiles">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-0">Portátiles</h6>
-        </div>
-      </div>
+  <div class="container mt-4">
+    <!-- Banner principal -->
+    <div class="mb-4">
+      <img src="/banner.gif" alt="Banner Principal" class="img-fluid w-100 rounded shadow" />
     </div>
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="assets/categorias/ordenadores.jpg" class="card-img-top" alt="Ordenadores">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-0">Ordenadores</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="assets/categorias/monitores.jpg" class="card-img-top" alt="Monitores">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-0">Monitores</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="assets/categorias/gaming.jpg" class="card-img-top" alt="Gaming">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-0">Gaming</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="assets/categorias/componentes.jpg" class="card-img-top" alt="Componentes">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-0">Componentes</h6>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card h-100 shadow-sm">
-        <img src="assets/categorias/accesorios.jpg" class="card-img-top" alt="Accesorios">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-0">Accesorios</h6>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Ofertas destacadas -->
-  <h2 class="mb-3">Ofertas destacadas</h2>
-  <div *ngIf="productosEnOferta$ | async as productos">
-    <div *ngIf="productos.length > 0; else sinOfertas">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <div class="col" *ngFor="let producto of productos">
+    <!-- Categorías destacadas -->
+    <h2 class="mb-4 text-center">Categorías destacadas</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3 mb-5 text-center">
+      <div class="col" *ngFor="let categoria of categorias">
+        <a [routerLink]="['/productos']" [queryParams]="{ categoria: categoria.nombre }" class="text-decoration-none text-dark">
           <div class="card h-100 shadow-sm">
-            <img [src]="'assets/productos/' + producto.imagen" class="card-img-top" [alt]="producto.nombre">
-            <div class="card-body">
-              <h5 class="card-title">{{ producto.nombre }}</h5>
-              <p class="card-text mb-1 text-muted">{{ producto.categoria | titlecase }}</p>
-              <p class="mb-0">
-                <span class="text-danger fw-bold">{{ producto.precio | currency:'EUR' }}</span>
-                <del class="text-muted ms-2" *ngIf="producto.precioOriginal">
-                  {{ producto.precioOriginal | currency:'EUR' }}
-                </del>
-              </p>
-              <span *ngIf="producto.precioOriginal" class="badge bg-success mt-2">
-                -{{ 100 - ((producto.precio / producto.precioOriginal) * 100) | number:'1.0-0' }}%
-              </span>
+            <img [src]="categoria.img" class="card-img-top" [alt]="categoria.nombre">
+            <div class="card-body p-2">
+              <h6 class="card-title mb-0">{{ categoria.nombre }}</h6>
             </div>
-            <div class="card-footer bg-transparent border-top-0">
-              <a [routerLink]="['/producto', producto.id]" class="btn btn-outline-primary w-100">Ver detalle</a>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Ofertas destacadas -->
+    <h2 class="mb-3">Ofertas destacadas</h2>
+    <div *ngIf="productosEnOferta$ | async as productos">
+      <div *ngIf="productos.length > 0; else sinOfertas">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+          <div class="col" *ngFor="let producto of productos">
+            <div class="card h-100 shadow-sm">
+              <img [src]="'assets/productos/' + producto.imagen" class="card-img-top" [alt]="producto.nombre">
+              <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text mb-1 text-muted">{{ producto.categoria | titlecase }}</p>
+                <p class="mb-0">
+                  <span class="text-danger fw-bold">{{ producto.precio | currency:'EUR' }}</span>
+                  <del class="text-muted ms-2" *ngIf="producto.precioOriginal">
+                    {{ producto.precioOriginal | currency:'EUR' }}
+                  </del>
+                </p>
+                <span *ngIf="producto.precioOriginal" class="badge bg-success mt-2">
+                  -{{ 100 - ((producto.precio / producto.precioOriginal) * 100) | number:'1.0-0' }}%
+                </span>
+              </div>
+              <div class="card-footer bg-transparent border-top-0">
+                <a [routerLink]="['/producto', producto.id]" class="btn btn-outline-primary w-100">Ver detalle</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <ng-template #sinOfertas>
+        <div class="alert alert-info mt-3">
+          No hay productos en oferta por el momento.
+        </div>
+      </ng-template>
     </div>
-    <ng-template #sinOfertas>
-      <div class="alert alert-info mt-3">
-        No hay productos en oferta por el momento.
-      </div>
-    </ng-template>
   </div>
 </div>
