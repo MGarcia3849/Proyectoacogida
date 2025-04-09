@@ -1,10 +1,24 @@
-footer {
-  font-size: 0.9rem;
+/* Cambiar el color de los enlaces cuando el usuario pasa el mouse sobre ellos */
+.hover-bg-primary:hover {
+  background-color: #007bff; /* Azul primario de Bootstrap */
+  color: white;
+}
 
-  a {
-    color: #6c757d;
-    &:hover {
-      color: #0d6efd;
-    }
-  }
+/* Efecto hover para los iconos de redes sociales */
+.hover-scale:hover {
+  transform: scale(1.2); /* Aumenta el tamaño del ícono */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Asegura que los enlaces sean visibles y tienen contraste */
+footer .text-light {
+  color: #f8f9fa !important; /* Asegura que el color sea blanco */
+}
+
+footer .text-muted {
+  color: #6c757d !important; /* Texto de color gris sutil para mayor contraste */
+}
+
+footer .text-white {
+  color: #ffffff !important; /* Blanco fuerte para los títulos y elementos clave */
 }
