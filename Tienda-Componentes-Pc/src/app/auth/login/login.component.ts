@@ -1,33 +1,37 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   email = '';
   password = '';
   error = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  login() {
-    this.authService.login(this.email, this.password)
-      .then(() => this.router.navigate(['/home']))
-      .catch(err => this.error = err.message);
+  login(): void {
+    this.authService.login(this.email, this.password).subscribe({
+      next: () => this.router.navigate(['/']),
+      error: (err: any) => this.error = err.message
+    });
   }
 
-  loginWithGoogle() {
-    this.authService.loginWithGoogle()
-      .then(() => this.router.navigate(['/home']))
-      .catch(err => this.error = err.message);
+  loginWithGoogle(): void {
+    this.authService.loginWithGoogle().subscribe({
+      next: () => this.router.navigate(['/']),
+      error: (err: any) => this.error = err.message
+    });
   }
 }
