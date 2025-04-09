@@ -1,4 +1,5 @@
 @use './../admin-variables' as adminVariables;
+@use 'sass:color';
 
 .container {
   padding: 20px;
@@ -23,7 +24,7 @@
     padding: 12px 15px;
     text-align: left;
     font-weight: 500;
-    border-bottom: 2px solid darken(adminVariables.$table-header-bg-color, 15%);
+    border-bottom: 2px solid color.scale(adminVariables.$table-header-bg-color, $lightness: -15%);
   }
 
   .table tbody tr {
@@ -79,7 +80,7 @@
 
     &:hover {
       background-color: adminVariables.$danger-hover-color;
-      border-color: darken(adminVariables.$danger-hover-color, 5%);
+      border-color: color.scale(adminVariables.$secondary-hover-color, $lightness: -5%);
     }
   }
 }
