@@ -1,16 +1,92 @@
-<div *ngIf="carrito && carrito.length > 0; else emptyCart">
-    <h2>🛒 Carrito de Compras</h2>
-    <ul>
-      <li *ngFor="let item of carrito">
-        {{ item.nombre }} - ${{ item.precio }}
-      </li>
-    </ul>
-    <button (click)="vaciarCarrito()">🗑 Vaciar Carrito</button>
-
-    <button (click)="comprar()" class="btn btn-success">🛍 Comprar</button>
-
+<div class="container-fluid py-5 bg-light">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div *ngIf="carrito && carrito.length > 0; else emptyCart" class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom-0 py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0 fs-4 fw-bold text-primary">
+              <i class="fas fa-shopping-cart me-2"></i>Tu Carrito
+            </h2>
+            <span class="badge bg-primary rounded-pill fs-6">{{carrito.length}} artículos</span>
+          </div>
+        </div>
+        <div class="card-body px-4">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Producto</th>
+                  <th scope="col" class="text-end">Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of carrito">
+                  <td class="py-3">
+                    <div class="d-flex align-items-center">
+                      <div class="me-3">
+                        <img [src]="item.imagen || 'assets/images/placeholder.png'" alt="{{item.nombre}}" 
+                             class="img-thumbnail product-image">
+                      </div>
+                      <div>
+                        <h6 class="mb-1">{{item.nombre}}</h6>
+                        <small class="text-muted">{{item.categoria || 'Sin categoría'}}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-end fw-bold">${{item.precio.toFixed(2)}}</td>
+                </tr>
+              </tbody>
+              <tfoot class="table-light">
+                <tr>
+                  <th scope="row">Total</th>
+                  <td class="text-end fw-bold fs-5 text-primary">${{totalCarrito.toFixed(2)}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-top-0 d-flex justify-content-between py-3">
+          <button (click)="vaciarCarrito()" class="btn btn-outline-secondary">
+            <i class="fas fa-trash-alt me-2"></i>Vaciar Carrito
+          </button>
+          <button (click)="comprar()" class="btn btn-primary">
+            <i class="fas fa-credit-card me-2"></i>Finalizar Compra
+          </button>
+        </div>
+      </div>
+      
+      <ng-template #emptyCart>
+        <div class="card border-0 shadow-sm text-center py-5">
+          <div class="card-body">
+            <i class="fas fa-shopping-cart text-muted mb-4 cart-icon"></i>
+            <h3 class="fw-light mb-3">Tu carrito está vacío</h3>
+            <p class="text-muted mb-4">Parece que aún no has añadido productos a tu carrito</p>
+            <a routerLink="/productos" class="btn btn-primary px-4 py-2">
+              <i class="fas fa-tags me-2"></i>Explorar productos
+            </a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
   </div>
-  
-  <ng-template #emptyCart>
-    <p>Tu carrito está vacío.</p>
-  </ng-template>
+</div>
+
+<!-- Modal de Compra Exitosa -->
+<div class="modal fade" id="compraExitosaModal" tabindex="-1" aria-labelledby="compraExitosaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="compraExitosaLabel">
+          <i class="fas fa-check-circle me-2"></i>Compra Exitosa
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fs-5 mb-0">¡Gracias por tu compra! Tu pedido se ha realizado correctamente.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

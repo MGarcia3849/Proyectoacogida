@@ -6,6 +6,9 @@ import { Observable, of, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 
+// Importar SweetAlert2
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -37,7 +40,20 @@ export class ProductDetailComponent {
   agregarAlCarrito(producto: Producto | null) {
     if (producto) {
       this.cartService.agregarProducto(producto);
-      alert(`${producto.nombre} agregado al carrito!`);
+
+      // Mostrar popup con SweetAlert2
+      Swal.fire({
+        title: '¡Producto agregado!',
+        text: `${producto.nombre} ha sido agregado al carrito.`,
+        imageUrl: producto.imagen,
+        imageWidth: 150,
+        imageHeight: 150,
+        imageAlt: producto.nombre,
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6',
+        backdrop: true
+      });
     }
   }
 }
