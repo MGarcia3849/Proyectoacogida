@@ -1,12 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductosService, Producto } from '../../core/services/productos.service';
-import { Observable, of, switchMap } from 'rxjs';
-import { Router } from '@angular/router';
+import { Observable, of, switchMap, Subscription, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators'; // Import map operator
 import { CartService } from '../../core/services/cart.service';
-
-// Importar SweetAlert2
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,44 +14,58 @@ import Swal from 'sweetalert2';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private productosService = inject(ProductosService);
   private cartService = inject(CartService);
   private router = inject(Router);
 
-  producto$!: Observable<Producto | null>;
+  producto$: Observable<Producto | null> | undefined;  // Change type to Producto | null
+  private subscription: Subscription | undefined;
 
-  constructor() {
+  ngOnInit(): void {
     this.producto$ = this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
-        return id ? this.productosService.getProductoById(id) : of(null);
+        if (!id) {
+          return of(null);
+        }
+        return this.productosService.getProductoById(id).pipe(
+          catchError(error => {
+            console.error('Error fetching product:', error);
+            Swal.fire('Error', 'No se pudo cargar el producto.', 'error');
+            return throwError(error); // Propagate the error
+          }),
+          map(product => product || null) // Explicitly convert undefined to null
+        );
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   volverATienda() {
     this.router.navigate(['/']);
   }
 
-  agregarAlCarrito(producto: Producto | null) {
+  agregarAlCarrito(producto: Producto | null) {  // Change type to Producto | null
     if (producto) {
       this.cartService.agregarProducto(producto);
 
-      // Mostrar popup con SweetAlert2
       Swal.fire({
-        title: '¡Producto agregado!',
-        text: `${producto.nombre} ha sido agregado al carrito.`,
-        imageUrl: producto.imagen,
-        imageWidth: 150,
-        imageHeight: 150,
-        imageAlt: producto.nombre,
+        title: '¡Producto Agregado!',
+        text: `${producto.nombre} se ha añadido al carrito.`,
         icon: 'success',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#3085d6',
-        backdrop: true
+        timer: 1500,
+        showConfirmButton: false
       });
+    } else {
+      Swal.fire('Advertencia', 'No se puede agregar un producto inexistente.', 'warning');
+
     }
   }
 }

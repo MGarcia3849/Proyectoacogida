@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   Firestore,
@@ -12,7 +12,7 @@ import {
   getAggregateFromServer,
   DocumentData
 } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 interface Producto {
@@ -27,17 +27,18 @@ interface Cliente {}
   standalone: true,
   imports: [CommonModule],
   templateUrl: './admin-reports.component.html',
-  styleUrl: './admin-reports.component.scss'
+  styleUrl: './admin-reports.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminReportsComponent implements OnInit {
   totalProductos$: Observable<number | null> = new Observable<number | null>();
   totalUsuarios$: Observable<number | null> = new Observable<number | null>();
-  productosPorCategoria$: Observable<{ [categoria: string]: number }> = new Observable<{ [categoria: string]: number }>();
+  productosPorCategoria$: Observable<{ [categoria: string]: number } | null> = of(null);
   categorias$: Observable<string[]> = new Observable<string[]>();
 
   private firestore = inject(Firestore);
   private productosCollection = collection(this.firestore, 'productos') as CollectionReference<Producto>;
-  private clientesCollection = collection(this.firestore, 'clientes') as CollectionReference<Cliente>;
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.cargarTotalProductos();
@@ -75,7 +76,11 @@ export class AdminReportsComponent implements OnInit {
 
   cargarCategorias() {
     this.categorias$ = this.productosPorCategoria$.pipe(
-      map(categorias => Object.keys(categorias))
+      map(categorias => {
+        const keys = Object.keys(categorias || {});
+        this.cdr.detectChanges();
+        return keys;
+      })
     );
   }
 }

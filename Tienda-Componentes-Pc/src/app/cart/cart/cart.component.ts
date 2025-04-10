@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { CartService } from '../../core/services/cart.service';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
-declare var bootstrap: any;
+// src/app/cart/cart/cart.component.ts
+import { Component } from '@angular/core';
+import { CartService } from '../../core/services/cart.service';
+import { CommonModule } from '@angular/common'; // CommonModule ya incluye NgIf y NgFor
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-cart',
-  standalone: true,
-  imports: [CommonModule, NgIf, NgFor, RouterModule],
+  standalone: true, // <-- AÑADIDO
+  imports: [CommonModule], // Importar CommonModule (ya no es necesario NgIf/NgFor por separado)
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
+  // ... (resto del código sin cambios) ...
+
   carrito: any[] = [];
   totalCarrito: number = 0;
 
@@ -20,8 +22,9 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe(carrito => {
-      this.carrito = carrito || [];
-      this.calcularTotal();
+
+      this.carrito = carrito ?? [];
+
     });
   }
 
