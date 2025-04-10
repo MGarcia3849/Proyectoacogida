@@ -33,7 +33,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
           <div class="col" *ngFor="let producto of productos">
             <div class="card h-100 shadow-sm">
-              <img [src]="'assets/productos/' + producto.imagen" class="card-img-top" [alt]="producto.nombre">
+              <img [src]="producto.imagenDataUrl" class="card-img-top" [alt]="producto.nombre">
               <div class="card-body">
                 <h5 class="card-title">{{ producto.nombre }}</h5>
                 <p class="card-text mb-1 text-muted">{{ producto.categoria | titlecase }}</p>

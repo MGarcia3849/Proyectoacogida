@@ -1,28 +1,28 @@
-import { Component, inject } from '@angular/core'; // Asegúrate que inject esté importado
-import { CommonModule } from '@angular/common'; // Necesario para *ngIf, *ngFor, | async
-import { RouterModule } from '@angular/router'; // Necesario para routerLink
-import { ProductosService, Producto } from '../../core/services/productos.service'; // Importa el servicio y la interfaz
-import { Observable } from 'rxjs'; // Importa Observable
+// src/app/pages/home/home.component.ts
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ProductosService } from '../../core/services/productos.service';
+// import { Producto } from '../../core/interfaces/producto.interface'; // <-- IMPORTACIÓN ELIMINADA
+
+// La interfaz Producto ahora se exporta desde ProductosService, pero no necesitamos
+// importarla aquí explícitamente si solo la usamos para tipar el Observable,
+// ya que TypeScript puede inferirlo del tipo de retorno del servicio.
+// Si la necesitaras para otra cosa, podrías importarla desde el servicio:
+// import { Producto } from '../../core/services/productos.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule, // Provee *ngIf, *ngFor, | async
-    RouterModule  // Provee routerLink
-  ],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
-  // ** 1. Inyecta el servicio ProductosService **
   private productosService = inject(ProductosService);
 
-  // ** 2. Define la propiedad que faltaba **
-  productosEnOferta$: Observable<Producto[]> = this.productosService.getOfertasDestacadas();
-
-  // ** 3. Mantén tu array 'categorias' con las rutas corregidas **
+  // Categorías (sin cambios)
   categorias = [
     { nombre: 'Portátiles', img: 'assets/img/portatiles.jpg' },
     { nombre: 'Ordenadores', img: 'assets/img/ordenadores.jpg' },
@@ -32,9 +32,15 @@ export class HomeComponent {
     { nombre: 'Accesorios', img: 'assets/img/accesorios.jpg' }
   ];
 
-  // El constructor puede estar vacío si usas inject() para los servicios
-  constructor() {}
+  // Observable para ofertas (no necesita el tipo explícito si se infiere)
+  productosEnOferta$ = this.productosService.getOfertasDestacadas();
+  // Alternativamente, si quieres el tipo explícito y la interfaz está exportada desde el servicio:
+  // import { Producto } from '../../core/services/productos.service';
+  // productosEnOferta$: Observable<Producto[]> = this.productosService.getOfertasDestacadas();
 
-  // ngOnInit también puede estar vacío si la inicialización se hace arriba
-  ngOnInit(): void {}
+
+  // Opcional: Manejador para imágenes rotas
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = 'assets/img/placeholder.png'; // Asegúrate que esta imagen exista
+  }
 }

@@ -1,19 +1,23 @@
+// src/app/cart/cart/cart.component.ts
 import { Component } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { CommonModule, NgIf, NgFor } from '@angular/common'; // CommonModule ya incluye NgIf y NgFor
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, NgIf, NgFor],
+  standalone: true, // <-- AÑADIDO
+  imports: [CommonModule], // Importar CommonModule (ya no es necesario NgIf/NgFor por separado)
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
+  // ... (resto del código sin cambios) ...
   carrito: any[] = [];
 
   constructor(private cartService: CartService) {
     this.cartService.cart$.subscribe(carrito => {
-      this.carrito = carrito || [];
+      // Asegurarse de que siempre sea un array, incluso si el BehaviorSubject emite null inicialmente
+      this.carrito = carrito ?? [];
     });
   }
 
