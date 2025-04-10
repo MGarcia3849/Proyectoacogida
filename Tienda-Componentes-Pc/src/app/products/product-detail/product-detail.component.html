@@ -1,78 +1,27 @@
-<!-- <div class="container mt-5" *ngIf="producto$ | async as producto; else sinProducto">
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <img
-        *ngIf="producto.imagen"
-        [src]="'/assets/productos/' + producto.imagen"
-        class="img-fluid rounded shadow"
-        [alt]="producto.nombre || 'Producto'"
-      />
-    </div>
-
-    <div class="col-md-6">
-      <h2 *ngIf="producto.nombre" class="mb-3">{{ producto.nombre }}</h2>
-
-      <p *ngIf="producto.descripcion" class="lead">{{ producto.descripcion }}</p>
-
-      <div class="mb-3">
-        <span *ngIf="producto.precio" class="fs-4 fw-bold text-success">
-          {{ producto.precio | currency:'EUR' }}
-        </span>
-        <span
-          *ngIf="producto.precioOriginal"
-          class="text-muted text-decoration-line-through ms-2"
-        >
-          {{ producto.precioOriginal | currency:'EUR' }}
-        </span>
-      </div>
-
-      <div *ngIf="producto.enOferta" class="alert alert-warning p-2 w-50">
-        <strong>¡En oferta!</strong> Producto con descuento especial.
-      </div>
-      <div *ngIf="producto.enOferta === false" class="text-muted mb-3">
-        Este producto no está en oferta actualmente.
-      </div>
-
-      <div *ngIf="producto.categoria" class="mb-2">
-        <strong>Categoría:</strong> {{ producto.categoria }}
-      </div>
-
-      <a routerLink="/" class="btn btn-outline-secondary mt-4">Volver al inicio</a>
-    </div>
-  </div>
-</div>
-
-<ng-template #sinProducto>
-  <div class="text-center mt-5">
-    <p class="text-muted">No se ha encontrado el producto.</p>
-  </div>
-</ng-template> -->
 <div class="product-detail" *ngIf="producto$ | async as producto; else loading">
-  <div class="product-card">
-    
-    <!-- Imagen centrada -->
+  <div class="product-card" *ngIf="producto; else notFound">
+
     <div class="image-container">
-      <img [src]="producto.imagen" [alt]="producto.nombre" class="product-image">
+      <img [src]="producto.imagenDataUrl" [alt]="producto.nombre" class="product-image" *ngIf="producto.imagenDataUrl && producto.nombre">
     </div>
 
-    <!-- Información del producto -->
     <div class="product-info">
-      <h1 class="product-title">{{ producto.nombre }}</h1>
-      <p class="product-description">{{ producto.descripcion }}</p>
-      <p class="product-price">💰 Precio: <strong>${{ producto.precio }}</strong></p>
-      
-      <!-- Botones de acción -->
+      <h1 class="product-title" *ngIf="producto.nombre">{{ producto.nombre }}</h1>
+      <p class="product-description" *ngIf="producto.descripcion">{{ producto.descripcion }}</p>
+      <p class="product-price" *ngIf="producto.precio">💰 Precio: <strong>${{ producto.precio }}</strong></p>
+
       <div class="actions">
         <button (click)="volverATienda()" class="btn btn-primary">🏠 Volver a la tienda</button>
-
-
-        
-
-        <button (click)="agregarAlCarrito(producto)" class="btn btn-secondary">🛒 Agregar al carrito</button>
-
+        <button (click)="agregarAlCarrito(producto)" class="btn btn-secondary" *ngIf="producto">🛒 Agregar al carrito</button>
       </div>
     </div>
   </div>
+
+  <ng-template #notFound>
+    <div class="not-found-container">
+      <p>Producto no encontrado.</p>
+    </div>
+  </ng-template>
 </div>
 
 <ng-template #loading>
@@ -80,7 +29,3 @@
     <p>⏳ Cargando detalles del producto...</p>
   </div>
 </ng-template>
-
-
-
-

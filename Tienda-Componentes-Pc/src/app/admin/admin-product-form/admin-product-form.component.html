@@ -1,58 +1,97 @@
+<h2 class="mb-4">{{ isEditMode ? 'Editar Producto' : 'Crear Nuevo Producto' }}</h2>
+
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="nombre" class="form-label">Nombre</label>
-      <input type="text" class="form-control" id="nombre" formControlName="nombre">
-      <div *ngIf="productForm.get('nombre')?.invalid && (productForm.get('nombre')?.dirty || productForm.get('nombre')?.touched)" class="text-danger">
-        El nombre es obligatorio.
-      </div>
-    </div>
-  
-    <div class="mb-3">
-      <label for="categoria" class="form-label">Categoría</label>
-      <select class="form-control" id="categoria" formControlName="categoria">
-        <option>Ordenadores</option>
-        <option>Portátiles</option>
-        <option>Monitores</option>
-        <option>Accesorios</option>
-        <option>Gaming</option>
-        <option>Componentes</option>
-      </select>
-      <div *ngIf="productForm.get('categoria')?.invalid && (productForm.get('categoria')?.dirty || productForm.get('categoria')?.touched)" class="text-danger">
-        La categoría es obligatoria.
-      </div>
-    </div>
-  
-    <div class="mb-3">
-      <label for="precio" class="form-label">Precio</label>
-      <input type="number" class="form-control" id="precio" formControlName="precio">
-      <div *ngIf="productForm.get('precio')?.invalid && (productForm.get('precio')?.dirty || productForm.get('precio')?.touched)" class="text-danger">
-        El precio es obligatorio y debe ser mayor o igual a 0.
-      </div>
-    </div>
-  
-    <div class="mb-3">
-      <label for="precioOriginal" class="form-label">Precio Original (opcional)</label>
-      <input type="number" class="form-control" id="precioOriginal" formControlName="precioOriginal">
-      <div *ngIf="productForm.get('precioOriginal')?.invalid && (productForm.get('precioOriginal')?.dirty || productForm.get('precioOriginal')?.touched)" class="text-danger">
-        El precio original debe ser mayor o igual a 0.
-      </div>
-    </div>
-  
-    <div class="mb-3">
-      <label for="imagen" class="form-label">URL de la Imagen</label>
-      <input type="text" class="form-control" id="imagen" formControlName="imagen">
+
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" class="form-control" id="nombre" formControlName="nombre">
+    <div *ngIf="productForm.get('nombre')?.invalid && (productForm.get('nombre')?.dirty || productForm.get('nombre')?.touched)" class="text-danger small mt-1">
+      El nombre es obligatorio.
     </div>
 
-    <div class="mb-3">
-      <label for="descripcion" class="form-label">Descripción</label>
-      <textarea class="form-control" id="descripcion" formControlName="descripcion"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="categoria" class="form-label">Categoría</label>
+    <select class="form-select" id="categoria" formControlName="categoria">
+      <option value="" disabled>Selecciona una categoría...</option>
+      <option value="Ordenadores">Ordenadores</option>
+      <option value="Portatiles">Portátiles</option> <option value="Monitores">Monitores</option> <option value="Accesorios">Accesorios</option>
+      <option value="Gaming">Gaming</option>
+      <option value="Componentes">Componentes</option>
+    </select>
+    <div *ngIf="productForm.get('categoria')?.invalid && (productForm.get('categoria')?.dirty || productForm.get('categoria')?.touched)" class="text-danger small mt-1">
+      La categoría es obligatoria.
+
     </div>
-  
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="oferta" formControlName="oferta">
-      <label class="form-check-label" for="oferta">En Oferta</label>
-    </div>
-  
-    <button type="submit" class="btn btn-primary me-2" [disabled]="productForm.invalid">Guardar</button>
-    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
-  </form>
+  </div>
+
+  <div class="row mb-3">
+      <div class="col-md-6">
+          <label for="precio" class="form-label">Precio (€)</label>
+          <input type="number" class="form-control" id="precio" formControlName="precio" min="0.01" step="0.01">
+          <div *ngIf="productForm.get('precio')?.invalid && (productForm.get('precio')?.dirty || productForm.get('precio')?.touched)" class="text-danger small mt-1">
+            El precio es obligatorio y debe ser mayor que 0.
+          </div>
+      </div>
+       <div class="col-md-6">
+          <label for="precioOriginal" class="form-label">Precio Original (€) <small class="text-muted">(opcional)</small></label>
+          <input type="number" class="form-control" id="precioOriginal" formControlName="precioOriginal" min="0.01" step="0.01">
+          <div *ngIf="productForm.get('precioOriginal')?.invalid && (productForm.get('precioOriginal')?.dirty || productForm.get('precioOriginal')?.touched)" class="text-danger small mt-1">
+            Si se introduce, debe ser mayor que 0.
+          </div>
+      </div>
+  </div>
+
+
+  <div class="mb-3">
+    <label for="imagenFile" class="form-label">Imagen del Producto</label>
+    <input type="file" class="form-control" id="imagenFile"
+           accept="image/png, image/jpeg, image/gif, image/webp"
+           (change)="onFileSelected($event)">
+     <div *ngIf="imageError" class="alert alert-danger mt-2 p-2 small">{{ imageError }}</div>
+     <div *ngIf="isUploading" class="text-primary mt-1 small">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Procesando imagen...
+     </div>
+  </div>
+
+  <div *ngIf="imageBase64Preview" class="mb-3 text-center">
+    <label class="form-label d-block fw-bold">Previsualización:</label>
+    <img [src]="imageBase64Preview" alt="Previsualización de la imagen cargada" style="max-height: 150px; max-width: 100%; border: 1px solid #dee2e6; border-radius: 0.25rem;">
+  </div>
+
+  <div class="mb-3">
+    <label for="descripcion" class="form-label">Descripción</label>
+    <textarea class="form-control" id="descripcion" formControlName="descripcion" rows="4"></textarea>
+      <div *ngIf="productForm.get('descripcion')?.invalid && (productForm.get('descripcion')?.dirty || productForm.get('descripcion')?.touched)" class="text-danger small mt-1">
+      La descripción es obligatoria. </div>
+  </div>
+
+  <div class="mb-3">
+      <label for="stock" class="form-label">Stock disponible</label>
+      <input type="number" class="form-control" id="stock" formControlName="stock" min="0">
+      <div *ngIf="productForm.get('stock')?.invalid && (productForm.get('stock')?.dirty || productForm.get('stock')?.touched)" class="text-danger small mt-1">
+        El stock es obligatorio y debe ser 0 o más. </div>
+  </div>
+
+
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="enOferta" formControlName="enOferta">
+    <label class="form-check-label" for="enOferta">Marcar como Oferta</label>
+  </div>
+
+  <hr class="my-4">
+  <div class="d-flex justify-content-end gap-2">
+      <a routerLink="/admin/products" class="btn btn-outline-secondary">Cancelar</a>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid || isUploading">
+        <span *ngIf="!isUploading">{{ isEditMode ? 'Actualizar Producto' : 'Crear Producto' }}</span>
+        <span *ngIf="isUploading">
+           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+           Guardando...
+        </span>
+      </button>
+  </div>
+
+</form>
