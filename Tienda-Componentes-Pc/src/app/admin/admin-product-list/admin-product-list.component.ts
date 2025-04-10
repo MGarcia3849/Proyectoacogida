@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductosService, Producto } from '../../core/services/productos.service';
 import { EMPTY, Observable } from 'rxjs';
-import { AdminProductFormComponent } from '../admin-product-form/admin-product-form.component'; 
+import { AdminProductFormComponent } from '../admin-product-form/admin-product-form.component';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -49,14 +49,20 @@ export class AdminProductListComponent implements OnInit {
     this.showProductForm(product);
   }
 
-  eliminarProducto(id: string) {
-    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      this.productosService.deleteProducto(id).then(() => {
-        console.log(`Producto con ID ${id} eliminado correctamente.`);
-      }).catch(error => {
-        console.error('Error al eliminar el producto:', error);
-      });
-    }
+ // src/app/admin/admin-product-list/admin-product-list.component.ts
+eliminarProducto(id: string | undefined) { // <-- Aceptar string | undefined
+  if (!id) { // <-- Añadir comprobación
+     console.error('No se puede eliminar un producto sin ID.');
+     return;
   }
+  if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+    this.productosService.deleteProducto(id).then(() => { // Ahora 'id' es seguro que es string
+      console.log(`Producto con ID ${id} eliminado correctamente.`);
+      // Considera recargar la lista o filtrar el array localmente
+    }).catch(error => {
+      console.error('Error al eliminar el producto:', error);
+    });
+  }
+}
 
 }
