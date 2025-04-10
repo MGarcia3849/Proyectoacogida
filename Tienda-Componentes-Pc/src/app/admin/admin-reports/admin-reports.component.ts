@@ -1,8 +1,26 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Firestore, collection, collectionData, query, count } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { 
+  Firestore,
+  collection,
+  collectionData,
+  query,
+  count,
+  AggregateQuerySnapshot,
+  CollectionReference,
+  AggregateField,
+  getAggregateFromServer,
+  DocumentData
+} from '@angular/fire/firestore';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+interface Producto {
+  categoria: string;
+  id: string;
+}
+
+interface Cliente {}
 
 @Component({
   selector: 'app-admin-reports',
@@ -11,7 +29,53 @@ import { map } from 'rxjs/operators';
   templateUrl: './admin-reports.component.html',
   styleUrl: './admin-reports.component.scss'
 })
+export class AdminReportsComponent implements OnInit {
+  totalProductos$: Observable<number | null> = new Observable<number | null>();
+  totalUsuarios$: Observable<number | null> = new Observable<number | null>();
+  productosPorCategoria$: Observable<{ [categoria: string]: number }> = new Observable<{ [categoria: string]: number }>();
+  categorias$: Observable<string[]> = new Observable<string[]>();
 
-export class AdminReportsComponent {
-   
+  private firestore = inject(Firestore);
+  private productosCollection = collection(this.firestore, 'productos') as CollectionReference<Producto>;
+  private clientesCollection = collection(this.firestore, 'clientes') as CollectionReference<Cliente>;
+
+  ngOnInit(): void {
+    this.cargarTotalProductos();
+    this.cargarTotalUsuarios();
+    this.cargarProductosPorCategoria();
+  }
+
+  cargarTotalProductos() {
+    const countQuery = query(this.productosCollection);
+    this.totalProductos$ = from(getAggregateFromServer(countQuery, { total: count() })).pipe(
+      map((snapshot: AggregateQuerySnapshot<{ total: AggregateField<number> }>) => snapshot.data().total)
+    );
+  }
+
+  cargarTotalUsuarios() {
+    const clientesRef = collection(this.firestore, 'clientes') as CollectionReference<Cliente>;
+    const countQuery = query(clientesRef);
+    this.totalUsuarios$ = from(getAggregateFromServer(countQuery, { total: count() })).pipe(
+      map((snapshot: AggregateQuerySnapshot<{ total: AggregateField<number> }, Cliente, DocumentData>) => snapshot.data().total)
+    );
+  }
+
+  cargarProductosPorCategoria() {
+    this.productosPorCategoria$ = collectionData<Producto>(this.productosCollection, { idField: 'id' })
+      .pipe(
+        map((productos: Producto[]) => {
+          const counts: { [categoria: string]: number } = {};
+          productos.forEach(producto => {
+            counts[producto.categoria] = (counts[producto.categoria] || 0) + 1;
+          });
+          return counts;
+        })
+      );
+  }
+
+  cargarCategorias() {
+    this.categorias$ = this.productosPorCategoria$.pipe(
+      map(categorias => Object.keys(categorias))
+    );
+  }
 }
