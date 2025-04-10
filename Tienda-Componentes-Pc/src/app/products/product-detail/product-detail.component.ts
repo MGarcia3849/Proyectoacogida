@@ -7,9 +7,6 @@ import { catchError, map } from 'rxjs/operators'; // Import map operator
 import { CartService } from '../../core/services/cart.service';
 import Swal from 'sweetalert2';
 
-// Importar SweetAlert2
-import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-product-detail',
   standalone: true,
