@@ -1,3 +1,4 @@
+
 // src/app/cart/cart/cart.component.ts
 import { Component } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
@@ -12,25 +13,45 @@ import { CommonModule, NgIf, NgFor } from '@angular/common'; // CommonModule ya 
 })
 export class CartComponent {
   // ... (resto del código sin cambios) ...
-  carrito: any[] = [];
 
-  constructor(private cartService: CartService) {
+  carrito: any[] = [];
+  totalCarrito: number = 0;
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
     this.cartService.cart$.subscribe(carrito => {
-      // Asegurarse de que siempre sea un array, incluso si el BehaviorSubject emite null inicialmente
+
       this.carrito = carrito ?? [];
+
     });
   }
 
-  vaciarCarrito() {
-    this.cartService.vaciarCarrito();
+  calcularTotal(): void {
+    this.totalCarrito = this.carrito.reduce((sum, item) => sum + item.precio, 0);
   }
 
-  comprar() {
+  vaciarCarrito(): void {
+    if (confirm('¿Estás seguro de que deseas vaciar tu carrito?')) {
+      this.cartService.vaciarCarrito();
+    }
+  }
+
+  comprar(): void {
     if (this.carrito.length > 0) {
-      alert('¡Compra realizada con éxito! Gracias por tu compra.');
+      const modalElement = document.getElementById('compraExitosaModal');
+      if (modalElement) {
+        // Inicializar y mostrar el modal
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
       this.cartService.vaciarCarrito();
     } else {
       alert('El carrito está vacío. Agrega productos antes de comprar.');
     }
+  }
+
+  formatPrecio(precio: number): string {
+    return precio.toFixed(2);
   }
 }

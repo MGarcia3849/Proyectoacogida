@@ -8,6 +8,7 @@
     <div *ngIf="productForm.get('nombre')?.invalid && (productForm.get('nombre')?.dirty || productForm.get('nombre')?.touched)" class="text-danger small mt-1">
       El nombre es obligatorio.
     </div>
+
   </div>
 
   <div class="mb-3">
@@ -21,6 +22,7 @@
     </select>
     <div *ngIf="productForm.get('categoria')?.invalid && (productForm.get('categoria')?.dirty || productForm.get('categoria')?.touched)" class="text-danger small mt-1">
       La categoría es obligatoria.
+
     </div>
   </div>
 

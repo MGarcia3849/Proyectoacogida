@@ -7,6 +7,9 @@ import { catchError, map } from 'rxjs/operators'; // Import map operator
 import { CartService } from '../../core/services/cart.service';
 import Swal from 'sweetalert2';
 
+// Importar SweetAlert2
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -55,6 +58,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   agregarAlCarrito(producto: Producto | null) {  // Change type to Producto | null
     if (producto) {
       this.cartService.agregarProducto(producto);
+
       Swal.fire({
         title: '¡Producto Agregado!',
         text: `${producto.nombre} se ha añadido al carrito.`,
@@ -64,6 +68,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       });
     } else {
       Swal.fire('Advertencia', 'No se puede agregar un producto inexistente.', 'warning');
+
     }
   }
 }
