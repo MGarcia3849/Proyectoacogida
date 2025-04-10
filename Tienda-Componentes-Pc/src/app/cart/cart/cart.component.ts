@@ -2,7 +2,8 @@
 // src/app/cart/cart/cart.component.ts
 import { Component } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
-import { CommonModule, NgIf, NgFor } from '@angular/common'; // CommonModule ya incluye NgIf y NgFor
+import { CommonModule } from '@angular/common'; // CommonModule ya incluye NgIf y NgFor
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-cart',
