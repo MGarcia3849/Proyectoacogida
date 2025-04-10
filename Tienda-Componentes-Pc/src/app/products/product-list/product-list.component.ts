@@ -31,34 +31,31 @@ export class ProductListComponent implements OnInit {
   precioMin = 0;
   precioMax = 0;
 
+  orden: 'asc' | 'desc' | null = null;
+
   ngOnInit(): void {
-    // Leer query params
     this.route.queryParams.subscribe(params => {
       if (params['categoria']) {
         this.filtros.categoria = params['categoria'];
       }
 
-      this.aplicarFiltros(); // Aplicar con la categoría si viene de home
+      this.aplicarFiltros();
     });
 
-    // Obtener datos y preparar filtros
     this.productos$.subscribe(productos => {
-      // Categorías únicas
       const categoriasUnicas = new Set(productos.map(p => p.categoria));
       this.categorias = Array.from(categoriasUnicas);
 
-      // Rango de precios
       const precios = productos.map(p => p.precio);
       this.precioMin = Math.min(...precios);
       this.precioMax = Math.max(...precios);
 
-      // Si no hay valores ya definidos (por query param), asignar por defecto
       if (!this.filtros.precioMin && !this.filtros.precioMax) {
         this.filtros.precioMin = this.precioMin;
         this.filtros.precioMax = this.precioMax;
       }
 
-      this.aplicarFiltros(); // Reaplicar cuando se cargan los productos
+      this.aplicarFiltros();
     });
   }
 
@@ -66,14 +63,27 @@ export class ProductListComponent implements OnInit {
     const nombreLower = this.filtros.nombre.toLowerCase().trim();
 
     this.productosFiltrados$ = this.productos$.pipe(
-      map(productos =>
-        productos.filter(p =>
+      map(productos => {
+        let filtrados = productos.filter(p =>
           (!this.filtros.categoria || p.categoria === this.filtros.categoria) &&
           p.precio >= this.filtros.precioMin &&
           p.precio <= this.filtros.precioMax &&
           (!nombreLower || p.nombre.toLowerCase().includes(nombreLower))
-        )
-      )
+        );
+
+        if (this.orden === 'asc') {
+          filtrados = filtrados.sort((a, b) => a.precio - b.precio);
+        } else if (this.orden === 'desc') {
+          filtrados = filtrados.sort((a, b) => b.precio - a.precio);
+        }
+
+        return filtrados;
+      })
     );
+  }
+
+  ordenarPorPrecio(direccion: 'asc' | 'desc'): void {
+    this.orden = direccion;
+    this.aplicarFiltros();
   }
 }
