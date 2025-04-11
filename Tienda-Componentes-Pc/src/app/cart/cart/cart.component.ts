@@ -1,32 +1,58 @@
+
+// src/app/cart/cart/cart.component.ts
 import { Component } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common'; // CommonModule ya incluye NgIf y NgFor
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, NgIf, NgFor],
+  standalone: true, // <-- AÑADIDO
+  imports: [CommonModule], // Importar CommonModule (ya no es necesario NgIf/NgFor por separado)
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent {
-  carrito: any[] = [];
+  // ... (resto del código sin cambios) ...
 
-  constructor(private cartService: CartService) {
+  carrito: any[] = [];
+  totalCarrito: number = 0;
+
+  constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
     this.cartService.cart$.subscribe(carrito => {
-      this.carrito = carrito || [];
+
+      this.carrito = carrito ?? [];
+
     });
   }
 
-  vaciarCarrito() {
-    this.cartService.vaciarCarrito();
+  calcularTotal(): void {
+    this.totalCarrito = this.carrito.reduce((sum, item) => sum + item.precio, 0);
   }
 
-  comprar() {
+  vaciarCarrito(): void {
+    if (confirm('¿Estás seguro de que deseas vaciar tu carrito?')) {
+      this.cartService.vaciarCarrito();
+    }
+  }
+
+  comprar(): void {
     if (this.carrito.length > 0) {
-      alert('¡Compra realizada con éxito! Gracias por tu compra.');
+      const modalElement = document.getElementById('compraExitosaModal');
+      if (modalElement) {
+        // Inicializar y mostrar el modal
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
       this.cartService.vaciarCarrito();
     } else {
       alert('El carrito está vacío. Agrega productos antes de comprar.');
     }
+  }
+
+  formatPrecio(precio: number): string {
+    return precio.toFixed(2);
   }
 }

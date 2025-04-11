@@ -1,1 +1,45 @@
-<p>admin-reports works!</p>
+<div class="container mt-5">
+  <h2>Informes del Administrador</h2>
+  <hr>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Total de Productos</h5>
+          <p class="card-text">
+            <strong *ngIf="totalProductos$ | async as total">{{ total }}</strong>
+            <strong *ngIf="!(totalProductos$ | async)">Cargando...</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Total de Usuarios Registrados</h5>
+          <p class="card-text">
+            <strong *ngIf="totalUsuarios$ | async as total">{{ total }}</strong>
+            <strong *ngIf="!(totalUsuarios$ | async)">Cargando...</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Productos por Categoría</h5>
+          <div *ngIf="productosPorCategoria$ | async as categorias">
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let categoria of categorias$ | async">
+                {{ categoria }}: <span class="badge bg-primary rounded-pill">{{ categorias[categoria] }}</span>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="!(productosPorCategoria$ | async)">
+            Cargando...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
